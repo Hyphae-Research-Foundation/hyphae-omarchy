@@ -1,0 +1,9 @@
+{
+  "schema": "hyphae-omarchy-vm-image-v1",
+  "version": "4.0.3",
+  "source_commit": "0534987009061cbe2dacdde4ad564092ab698d12",
+  "release_url": "https://github.com/omacom/omarchy/releases/tag/v4.0.3",
+  "url": "https://iso.omarchy.org/omarchy-4.0.3.iso",
+  "bytes": 6260654080,
+  "sha256": "03d60bc74306dca51f96e1a84b690871d8d606826b260edd0208962da8507d14"
+}

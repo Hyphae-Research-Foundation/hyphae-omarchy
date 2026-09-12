@@ -1,0 +1,25 @@
+Hyphae Memory for Omarchy
+
+The plugin source is licensed under Apache-2.0; see LICENSE.
+
+The runtime uses Hyphae and hyphae-embed from
+https://github.com/Hyphae-Research-Foundation/hyphae
+Copyright 2026 Celiums Solutions LLC.
+Hyphae software and normative specifications are Apache-2.0. Its narrative
+documentation uses CC-BY-SA-4.0. Exact source revisions and component notices
+are retained with the runtime bundle and source lock.
+
+hyphae-embed uses Hyphae's existing Candle-based embedding implementation.
+The optional BAAI/bge-small-en-v1.5 reference model is MIT-licensed; its source,
+revision and file digests are recorded in models.lock.json.
+
+Omarchy is an independently licensed MIT project:
+https://github.com/omacom/omarchy
+The plugin imports the user's installed Omarchy/Quickshell UI components.
+
+Third-party components retain their licenses and trademarks. Runtime bundles
+include Hyphae's THIRD_PARTY_NOTICES.md, a CycloneDX Cargo dependency inventory,
+and dependency license texts, including the Candle components. The inventory
+includes normal and build dependencies for the target; system libraries and
+the Rust toolchain are separate. Test-only host dependencies are pinned
+by tests/hosts/package-lock.json and are not distributed in the plugin archive.

@@ -1,0 +1,34 @@
+{
+  "schema": "hyphae-omarchy-vm-lifecycle-v1",
+  "status": "passed",
+  "started": "2026-09-12T05:26:04.059265+00:00",
+  "source_commit": "6ef8914381af3073f69dc1981b0ca1f605da73fa",
+  "package_sha256": "67b15c04acd8f1407a5e8a5870106e339499bc49264a35f92e90757b497bfff6",
+  "runtime_sha256": "53692ff83c02d2f05cd7b9d0c9905ebb578114a3b80313f6305d9e7750fb9808",
+  "steps": [
+    "previous-synthetic-profile-preserved",
+    "packaged-plugin-passes-official-validator-and-loads",
+    "offline-runtime-inventory-verification",
+    "runtime-activation-refreshes-systemd-and-existing-agents",
+    "systemd-embedding-backfill-and-hybrid-proof",
+    "capture-pause-and-resume",
+    "worker-outage-and-systemd-recovery",
+    "sigkill-restart-retains-memory",
+    "failed-restore-preserves-current-data-and-restarts-service",
+    "verified-restore-recovers-memory-and-worker",
+    "widget-disable-preserves-running-memory",
+    "integration-removal-preserves-data-and-backups",
+    "older-backup-recovers-credentials-after-reinstall",
+    "reinstall-recovers-memory-worker-and-agent-connections"
+  ],
+  "fresh_profile": true,
+  "binary_sha256": "999186306db030e9643533b73caea7e7d3c53e7e0df8053d066ed9e15f120b01",
+  "embed_sha256": "beccf53a3238238e3744e29794ff591f91e9a2fd6ef75a1a948b90cd35b53c26",
+  "packages": [
+    "omarchy 4.0.3-1",
+    "omarchy-settings 4.0.3-1",
+    "hyprland 0.56.2-2",
+    "quickshell 0.3.1-1"
+  ],
+  "finished": "2026-09-12T05:26:23.831251+00:00"
+}

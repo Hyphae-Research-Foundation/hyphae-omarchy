@@ -1,0 +1,15 @@
+{
+  "schema": "hyphae-candidate-review-v1",
+  "status": "ready-for-owner-review",
+  "timestamp": "2026-09-12T05:36:01.865659+00:00",
+  "source_commit": "6ef8914381af3073f69dc1981b0ca1f605da73fa",
+  "binary_sha256": "999186306db030e9643533b73caea7e7d3c53e7e0df8053d066ed9e15f120b01",
+  "runtime_sha256": "53692ff83c02d2f05cd7b9d0c9905ebb578114a3b80313f6305d9e7750fb9808",
+  "native_checks": 21,
+  "rust_tests_passed": 1783,
+  "plugin_tests_passed": 6,
+  "runtime_steps": 14,
+  "vm_steps": 14,
+  "publication": "not-published",
+  "hosted_ci": "not-run"
+}

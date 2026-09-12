@@ -1,0 +1,34 @@
+{
+  "schema": "hyphae-omarchy-visual-review-v1",
+  "status": "passed",
+  "timestamp": "2026-09-12T05:25:42.042507+00:00",
+  "environment": "Omarchy 4.0.3-1 / Hyprland 0.56.2-2 / Quickshell 0.3.1-1, QEMU/KVM",
+  "source_files": {
+    "BarWidget.qml": "2fc64839f5a8297ed13d5b7755c639843c425d75e76761b222c0a64ea5af320f",
+    "Panel.qml": "32df5aac08c3c86ff14d56c9e9db5076cc821587d03d37781a492f7495060227",
+    "MemoryController.qml": "24648ec846ee2319cff01b5caddc58e2f5559307acbcf66badaf4eb592ad713b",
+    "scripts/bridge.py": "81959bc2fbedfe38672e656c8755d2088cb6e4a0367616c74355539c455b3342",
+    "scripts/runtime.py": "87c3ce824ef32413c81eeae88b4d84dc8fb35b61f7e24b032a00cbf281e03c21"
+  },
+  "checks": [
+    "bar-click-opens-panel",
+    "four-populated-tabs",
+    "manual-remember-persists-with-panel-provenance",
+    "enter-submits-search",
+    "explicit-query-proof-verifies-offline",
+    "escape-cancels-forget-without-removing-memory",
+    "escape-closes-panel-and-bar-reopens-it",
+    "four-agent-connections-and-codex-hook-review-guidance",
+    "explicit-global-sharing-is-recalled-from-another-project",
+    "health-action-and-verified-backup",
+    "readable-local-backup-dates"
+  ],
+  "screenshots": {
+    "01-memory-status.png": "299c9bd87f27328279786c83873a86fbb3052a78cb11e980e50c4b11c1d30636",
+    "02-memory-records.png": "3ea497d1f912bcaab1e24a8f357e7294d68f5d29410b6ad16dcd2a9feca195cf",
+    "03-memory-search.png": "2f9527d891c36598fead674beeb69c715878f172c968af223902bf38cd730380",
+    "04-query-verification.png": "b51363e5fe8b501408002f3b5f601516d209947b35c210ddfb76c6a4cc63cd18",
+    "05-agent-connections.png": "84149bdeb963f5a286a73506ea12fe52271e7264f7aaf786890c979285b8a735",
+    "06-maintenance.png": "496859ebdfc3c04fcf6374c805de263f02ec8c1029c279eb10d5663fe8cab4f6"
+  }
+}

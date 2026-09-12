@@ -1,0 +1,159 @@
+{
+  "schema": "hyphae-omarchy-upstream-checks-v1",
+  "started": "2026-09-12T05:26:46.516376+00:00",
+  "source_commit": "6ef8914381af3073f69dc1981b0ca1f605da73fa",
+  "source_clean": true,
+  "scope": "full local suite",
+  "selection": [
+    "fmt",
+    "clippy",
+    "rust",
+    "rustdoc",
+    "embed-fmt",
+    "embed",
+    "sdk-models",
+    "python",
+    "typescript-install",
+    "typescript-build",
+    "typescript",
+    "cross-sdk",
+    "conformance-build",
+    "client-conformance",
+    "integration-install",
+    "integration-build",
+    "integration-conformance",
+    "boundaries",
+    "documentation",
+    "documentation-examples",
+    "packaging"
+  ],
+  "checks": [
+    {
+      "check": "fmt",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 1.755
+    },
+    {
+      "check": "clippy",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 3.527
+    },
+    {
+      "check": "rust",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 440.923
+    },
+    {
+      "check": "rustdoc",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 1.758
+    },
+    {
+      "check": "embed-fmt",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 0.051
+    },
+    {
+      "check": "embed",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 0.105
+    },
+    {
+      "check": "sdk-models",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 0.051
+    },
+    {
+      "check": "python",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 2.783
+    },
+    {
+      "check": "typescript-install",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 0.289
+    },
+    {
+      "check": "typescript-build",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 1.261
+    },
+    {
+      "check": "typescript",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 0.26
+    },
+    {
+      "check": "cross-sdk",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 8.09
+    },
+    {
+      "check": "conformance-build",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 0.103
+    },
+    {
+      "check": "client-conformance",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 0.891
+    },
+    {
+      "check": "integration-install",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 1.502
+    },
+    {
+      "check": "integration-build",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 0.63
+    },
+    {
+      "check": "integration-conformance",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 0.182
+    },
+    {
+      "check": "boundaries",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 0.092
+    },
+    {
+      "check": "documentation",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 0.215
+    },
+    {
+      "check": "documentation-examples",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 0.249
+    },
+    {
+      "check": "packaging",
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 0.98
+    }
+  ],
+  "status": "passed"
+}

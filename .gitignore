@@ -1,0 +1,11 @@
+/target/
+/IMPLEMENTATION.md
+/dist/
+/.runtime/
+/.upstream/
+__pycache__/
+*.pyc
+*.key
+*.proof
+*.witness
+node_modules/

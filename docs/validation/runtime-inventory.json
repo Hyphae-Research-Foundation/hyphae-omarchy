@@ -1,0 +1,16 @@
+{
+  "schema": "hyphae-runtime-inventory-check-v1",
+  "status": "passed",
+  "source_commit": "6ef8914381af3073f69dc1981b0ca1f605da73fa",
+  "runtime_sha256": "53692ff83c02d2f05cd7b9d0c9905ebb578114a3b80313f6305d9e7750fb9808",
+  "components": 330,
+  "license_text_bytes": 3529843,
+  "members": 8,
+  "checks": [
+    "complete-member-size-and-sha256-inventory",
+    "official-cyclonedx-1.6-schema",
+    "dependency-graph-references",
+    "embedding-library-notices",
+    "no-local-build-paths-in-sbom-or-notices"
+  ]
+}

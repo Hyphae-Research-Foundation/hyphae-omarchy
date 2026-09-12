@@ -1,0 +1,55 @@
+{
+  "build": {
+    "control_schema": "hyphae-omarchy-control-v1",
+    "profile": "release",
+    "protocol_minor": 7,
+    "rust": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+    "schema": "hyphae-omarchy-runtime-source-v1",
+    "source_commit": "6ef8914381af3073f69dc1981b0ca1f605da73fa",
+    "source_date_epoch": 1789190613,
+    "target": "x86_64-unknown-linux-gnu",
+    "upstream_base": "f65ada5c125ca2b370f7c51630f479a102e93b0c"
+  },
+  "bundle": {
+    "bytes": 12006372,
+    "name": "hyphae-memory-0.1.0-linux-x86_64-6ef8914381af.tar.gz",
+    "sha256": "53692ff83c02d2f05cd7b9d0c9905ebb578114a3b80313f6305d9e7750fb9808",
+    "url": null
+  },
+  "files": {
+    "bin/hyphae": {
+      "bytes": 21721232,
+      "sha256": "999186306db030e9643533b73caea7e7d3c53e7e0df8053d066ed9e15f120b01"
+    },
+    "bin/hyphae-embed": {
+      "bytes": 8464376,
+      "sha256": "beccf53a3238238e3744e29794ff591f91e9a2fd6ef75a1a948b90cd35b53c26"
+    },
+    "share/DEPENDENCY_LICENSES.txt": {
+      "bytes": 3529843,
+      "sha256": "dcfff35ce1871586d90a48893166c8909bd195972718a21ef9bac7e4033357d6"
+    },
+    "share/LICENSE": {
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    "share/LICENSE-DOCUMENTATION": {
+      "bytes": 20137,
+      "sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2"
+    },
+    "share/SBOM.cdx.json": {
+      "bytes": 324377,
+      "sha256": "023fe34a37394754e225b0d732cfecb9af799f87312224529ba5d73590e2411e"
+    },
+    "share/SOURCE.json": {
+      "bytes": 397,
+      "sha256": "af0a9720401db2031893a9e8eaf1a09183c3570a701af9b3363cf0d02ff7f42e"
+    },
+    "share/THIRD_PARTY_NOTICES.md": {
+      "bytes": 3099,
+      "sha256": "28f588aa4bb79d71956d4f348e4a007e1c1ab16b4d26001ed07382333eb8040f"
+    }
+  },
+  "schema": "hyphae-omarchy-runtime-lock-v1",
+  "source_commit": "6ef8914381af3073f69dc1981b0ca1f605da73fa"
+}

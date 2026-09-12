@@ -1,0 +1,19 @@
+{
+  "schema": "hyphae-omarchy-source-lock-v1",
+  "hyphae": {
+    "repository": "https://github.com/Hyphae-Research-Foundation/hyphae.git",
+    "base_commit": "f65ada5c125ca2b370f7c51630f479a102e93b0c",
+    "candidate_commit": "6ef8914381af3073f69dc1981b0ca1f605da73fa",
+    "bundle": "upstream/hyphae-candidate.bundle",
+    "bundle_sha256": "7be709c66a1396c463d6cd1766d3be31fe34671840ec6d8fe4d5881802f58297",
+    "patch": "upstream/hyphae-agent-memory.patch",
+    "patch_sha256": "db7ce7b6dba210a777c9f128d676faea095c82af478bf4c2107da91e96f21dc9"
+  },
+  "omarchy": {
+    "version": "4.0.3",
+    "commit": "0534987009061cbe2dacdde4ad564092ab698d12"
+  },
+  "target": "x86_64-unknown-linux-gnu",
+  "rust": "1.96.0",
+  "published": false
+}

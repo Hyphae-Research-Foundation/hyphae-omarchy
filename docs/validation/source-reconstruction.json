@@ -1,0 +1,14 @@
+{
+  "schema": "hyphae-source-reconstruction-v1",
+  "status": "passed",
+  "source_commit": "6ef8914381af3073f69dc1981b0ca1f605da73fa",
+  "base_commit": "f65ada5c125ca2b370f7c51630f479a102e93b0c",
+  "bundle_sha256": "7be709c66a1396c463d6cd1766d3be31fe34671840ec6d8fe4d5881802f58297",
+  "patch_sha256": "db7ce7b6dba210a777c9f128d676faea095c82af478bf4c2107da91e96f21dc9",
+  "checks": [
+    "public-base-fetch",
+    "bundle-prerequisite-verification",
+    "clean-exact-candidate-checkout",
+    "readable-patch-matches-candidate-tree"
+  ]
+}

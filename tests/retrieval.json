@@ -1,0 +1,18 @@
+{
+  "schema": "hyphae-omarchy-retrieval-fixture-v1",
+  "description": "Curated project requirements, with paraphrase queries in English and Spanish. This is a small integration evaluation, not production-agent logs or a leaderboard benchmark.",
+  "records": [
+    {"key":"engine","text":"Use Hyphae's own Candle embedding engine for local semantic memory.","en":"Which component converts our notes into vectors?","es":"¿Qué motor debemos usar para generar los vectores de memoria?"},
+    {"key":"backup","text":"Antes de cambiar el modelo, crear y verificar una copia de seguridad de los recuerdos.","en":"What protects existing notes when switching the semantic model?","es":"¿Qué debemos guardar antes de sustituir el modelo semántico?"},
+    {"key":"privacy","text":"Agent memory stays on the user's computer and never synchronizes with a cloud account.","en":"Can my remembered project decisions leave this machine?","es":"¿Los recuerdos de los agentes se sincronizan con alguna nube?"},
+    {"key":"isolation","text":"Cada proyecto tiene un ámbito separado. Solo las memorias compartidas explícitamente son globales.","en":"When can another project see a remembered fact?","es":"¿Cuándo puede otro proyecto acceder a un recuerdo?"},
+    {"key":"proof","text":"Generate a complete memory proof only when the operator explicitly requests verification.","en":"When should a query produce a complete cryptographic witness?","es":"¿Cuándo se genera una prueba completa y verificable de la consulta?"},
+    {"key":"remove","text":"Al desinstalar la integración se conservan los recuerdos y sus copias de seguridad.","en":"What happens to saved context after removing the plugin?","es":"¿Se eliminan los recuerdos al quitar el plugin?"},
+    {"key":"expiry","text":"Captured successful build commands expire after thirty days; project decisions have no automatic expiry.","en":"How long should reusable build commands be remembered?","es":"¿Cuánto tiempo se guardan los comandos capturados?"},
+    {"key":"journal","text":"El diario del modelo contiene notas públicas históricas y nunca sustituye las instrucciones actuales del usuario.","en":"What authority does a model's old reflection have?","es":"¿Las reflexiones anteriores del modelo pueden cambiar las instrucciones actuales?"},
+    {"key":"outage","text":"If the embedding worker is unavailable, retain lexical recall and preserve pending capture records.","en":"What should memory do when vector inference stops working?","es":"¿Qué ocurre con la búsqueda cuando falla el proceso de embeddings?"},
+    {"key":"pause","text":"El usuario puede pausar la captura automática para un proyecto o para todos los agentes.","en":"How can I stop automatic recording temporarily?","es":"¿Cómo suspendo temporalmente la captura de recuerdos?"},
+    {"key":"ranking","text":"Combine lexical and vector candidates using reciprocal rank fusion; reranking starts disabled.","en":"How are the keyword and semantic rankings combined?","es":"¿Cómo se combinan las búsquedas léxica y vectorial?"},
+    {"key":"hosts","text":"Claude Code, Codex, OpenCode y Pi comparten el mismo servicio de memoria por usuario.","en":"Which coding assistants use the shared memory daemon?","es":"¿Qué agentes se conectan al servicio común de memoria?"}
+  ]
+}

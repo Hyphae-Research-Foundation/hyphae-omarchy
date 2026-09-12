@@ -1,0 +1,16 @@
+{
+  "schema": "hyphae-plugin-production-files-v1",
+  "status": "passed",
+  "files": {
+    "BarWidget.qml": "2fc64839f5a8297ed13d5b7755c639843c425d75e76761b222c0a64ea5af320f",
+    "Panel.qml": "32df5aac08c3c86ff14d56c9e9db5076cc821587d03d37781a492f7495060227",
+    "MemoryController.qml": "24648ec846ee2319cff01b5caddc58e2f5559307acbcf66badaf4eb592ad713b",
+    "scripts/bridge.py": "81959bc2fbedfe38672e656c8755d2088cb6e4a0367616c74355539c455b3342",
+    "scripts/runtime.py": "87c3ce824ef32413c81eeae88b4d84dc8fb35b61f7e24b032a00cbf281e03c21",
+    "manifest.json": "8350e885101027a7fb1b3d255376aca317ae50dbdf703531618846309a4c73bc",
+    "models.lock.json": "d9f9689bdfc1c1a9695903663e573673c1beb9bcaba87337b006d8de85ec478d",
+    "runtime.lock.json": "4c4c00186e6c68f51a794fe8e241908a1674707e6433d31c7bdc77cff07dacff"
+  },
+  "qml_lint": "passed",
+  "bytecode_cache_created": false
+}
