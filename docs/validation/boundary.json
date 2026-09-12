@@ -1,0 +1,17 @@
+{
+  "schema": "hyphae-memory-panel-vm-boundary-v1",
+  "status": "passed",
+  "steps": [
+    "valid-panel-credential-cannot-reach-operator-or-generic-endpoints",
+    "independent-configurations-and-native-credentials-preserved-after-denied-requests",
+    "memory-write-and-complete-proof-verification-without-filesystem-path-disclosure",
+    "hybrid-query-and-proof-through-independently-configured-worker",
+    "project-isolation",
+    "explicit-global-sharing",
+    "service-owned-verified-backup-with-server-chosen-destination",
+    "forget-removes-live-recall",
+    "independent-service-and-configurations-preserved-after-memory-operations"
+  ],
+  "independent_files_preserved": 11,
+  "service_binary_sha256": "e9b72e8a1b1e1b61c05fdb23ff8b3896c9b23cf625be1c00cfb4dff518b23228"
+}

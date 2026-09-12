@@ -1,0 +1,27 @@
+{
+  "schema": "hyphae-memory-panel-client-validation-v1",
+  "status": "passed",
+  "tests_passed": 14,
+  "python": "3.14.7",
+  "tests": [
+    "test_authenticated_unix_exchange_exposes_only_result_to_ui",
+    "test_busy_response_without_request_id_remains_correlated",
+    "test_generic_or_reused_credentials_are_rejected",
+    "test_group_readable_credentials_are_preserved_and_rejected",
+    "test_invalid_response_and_unexpected_fields_are_rejected",
+    "test_missing_connection_is_reported_without_creating_files",
+    "test_non_socket_endpoint_is_preserved",
+    "test_operator_requests_never_reach_socket",
+    "test_oversized_response_is_bounded",
+    "test_remote_errors_do_not_echo_credentials",
+    "test_request_limit_and_unknown_fields_are_rejected",
+    "test_stopped_service_is_unavailable_without_requiring_new_credentials",
+    "test_symlinked_connection_file_is_rejected",
+    "test_wrong_response_identity_is_rejected"
+  ],
+  "source_files": {
+    "scripts/bridge.py": "577a547bdcc9eafbfa5eb0f5b1a79d010158ee79873cdbf9bdab8626ad8e71a4",
+    "tests/test_bridge.py": "cf86722d40479b9e294e265337944faad79c2a6dc0c315da632a3e12d98511d6"
+  },
+  "log_sha256": "a94e945cef347bc74e1d0ed79d14e01ac2bb46da9f80ebda04404a86e3e5c41d"
+}

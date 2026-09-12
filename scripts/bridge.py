@@ -1,123 +1,165 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
-"""Bounded QML-to-Hyphae bridge. Memory policy and operations live in Hyphae."""
+"""Bounded client for the independently provisioned Hyphae memory panel socket."""
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 from pathlib import Path
-import signal
-import shutil
-import subprocess
+import re
+import socket
+import stat
+import struct
 import sys
+import time
 
-# Omarchy watches plugin source for hot reload. Helper imports must not write
-# bytecode into that watched directory during installation or panel actions.
 sys.dont_write_bytecode = True
+SCHEMA = 'hyphae-memory-panel-v1'
+CONNECTION_SCHEMA = 'hyphae-memory-panel-connection-v1'
+MAX_REQUEST = 64 * 1024
+MAX_RESPONSE = 1024 * 1024
+OPERATIONS = frozenset(('status', 'projects', 'recall', 'list', 'store', 'forget', 'backups', 'backup'))
+TOKEN = re.compile(r'hypm1_[0-9a-f]{64}\Z')
+MESSAGES = {
+    'connection_required': 'Set up the dedicated Hyphae memory connection independently first.',
+    'unavailable': 'The memory service is unavailable. Check it in Hyphae.',
+    'unauthorized': 'The service rejected the dedicated memory credential.',
+    'invalid_request': 'The memory request is invalid.',
+    'forbidden_operation': 'This connection grants only memory data operations.',
+    'busy': 'The memory service is busy. Try again shortly.',
+    'timeout': 'The memory service did not finish within its deadline.',
+    'limit_exceeded': 'The request or its proof exceeds the memory service limit.',
+    'protocol_error': 'The endpoint does not provide the expected memory interface.',
+}
 
-SCHEMA = "hyphae-omarchy-control-v1"
-MAX_BYTES = 1024 * 1024
-OPERATIONS = {"status", "projects", "agents", "backups", "recall", "list", "store", "forget", "verify", "pause", "configure", "disconnect", "doctor", "backup", "restore", "setup", "service_start", "semantic", "remove", "install", "install_model"}
+
+def fail(code: str, request_id=None) -> dict:
+    return {'schema': SCHEMA, 'id': request_id, 'ok': False,
+            'error': {'code': code, 'message': MESSAGES.get(code, 'The memory operation could not be completed.')}}
 
 
-def fail(code: str, message: str) -> dict:
-    return {"schema": SCHEMA, "ok": False, "error": {"code": code, "message": message}}
-
-
-def data_root() -> Path:
-    return Path(os.environ.get("XDG_DATA_HOME", str(Path.home() / ".local/share"))) / "hyphae-omarchy"
-
-
-def runtime_binary() -> str | None:
-    override = os.environ.get("HYPHAE_OMARCHY_BINARY")
+def connection_path() -> Path:
+    override = os.environ.get('HYPHAE_MEMORY_PANEL_CONFIG')
     if override:
-        path = Path(override)
-        return str(path.resolve()) if path.is_file() and os.access(path, os.X_OK) else None
-    receipt = data_root() / "runtime.json"
-    if receipt.is_file():
-        value = json.loads(receipt.read_text(encoding="utf-8"))
-        path = Path(value["binary"]).resolve(strict=True)
-        if not path.is_relative_to(data_root().resolve()) or not os.access(path, os.X_OK):
-            raise ValueError("invalid managed binary")
-        with path.open("rb") as source:
-            actual = hashlib.file_digest(source, "sha256").hexdigest()
-        if actual != value["sha256"]:
-            raise ValueError("managed runtime digest mismatch")
-        return str(path)
-    return shutil.which("hyphae")
+        return Path(override)
+    root = Path(os.environ.get('XDG_CONFIG_HOME', str(Path.home() / '.config')))
+    return root / 'hyphae-panel/client.json'
 
 
-def execute(request: dict) -> dict:
-    if set(request) - {"schema", "operation", "arguments", "id"} or not {"schema", "operation", "arguments"} <= set(request) or request["schema"] != SCHEMA or request["operation"] not in OPERATIONS or not isinstance(request["arguments"], dict):
-        return fail("invalid_request", "Unsupported memory request.")
-    operation = request["operation"]
-    if operation in {"install", "install_model"}:
-        from runtime import install_model, install_runtime
-        result = install_runtime(request["arguments"]) if operation == "install" else install_model(request["arguments"])
-        return {"schema": SCHEMA, "ok": True, "result": result}
-    binary = runtime_binary()
-    if not binary:
-        if operation == "status":
-            return {"schema": SCHEMA, "ok": True, "result": {"installed": False, "initialized": False, "service_active": False}}
-        return fail("not_installed", "Install the Hyphae Memory runtime first.")
-    environment = os.environ.copy()
-    for key in ("HYPHAE_NATIVE_API_KEY_FILE", "HYPHAE_BASE_URL", "HYPHAE_DATA_DIR", "HYPHAE_ENDPOINT"):
-        environment.pop(key, None)
-    proved_query = operation in {"recall", "list"} and request["arguments"].get("prove") is True
-    timeout = 300 if proved_query or operation in {"semantic", "setup", "service_start", "verify"} else 120 if operation in {"backup", "restore", "doctor", "configure", "disconnect", "remove"} else 10
-    process = subprocess.Popen([binary, "agent", "ui"], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE, env=environment, start_new_session=True)
-    try:
-        output, _ = process.communicate(json.dumps(request).encode() + b"\n", timeout=timeout)
-    except subprocess.TimeoutExpired:
-        # Host CLIs can spawn installers. Stop the whole operation so a timed-out
-        # request cannot keep changing agent configuration in the background.
-        try:
-            os.killpg(process.pid, signal.SIGKILL)
-        except ProcessLookupError:
-            pass
-        process.communicate()
-        raise
-    if len(output) > MAX_BYTES:
-        return fail("response_too_large", "The memory response exceeded its bound.")
-    try:
-        value = json.loads(output)
-    except (ValueError, UnicodeError):
-        return fail("runtime_incompatible", "This Hyphae runtime needs the Agent Memory control interface. Install the compatible runtime.")
-    if not isinstance(value, dict) or value.get("schema") != SCHEMA or value.get("id") != request.get("id"):
-        return fail("runtime_incompatible", "The installed runtime uses an unsupported memory interface.")
-    if value.get("ok") and operation == "status":
-        receipt = data_root() / "runtime.json"
-        if receipt.is_file():
-            value["result"]["runtime_activation_pending"] = bool(json.loads(receipt.read_text()).get("activation_pending"))
-    if value.get("ok") and operation in {"setup", "service_start"}:
-        receipt = data_root() / "runtime.json"
-        if receipt.is_file():
-            from runtime import write_json
-            installed = json.loads(receipt.read_text())
-            installed["activation_pending"] = False
-            write_json(receipt, installed)
+def private_parent(path: Path) -> None:
+    parent = path.parent
+    metadata = parent.lstat()
+    if (not path.is_absolute() or not stat.S_ISDIR(metadata.st_mode)
+            or metadata.st_uid != os.getuid() or metadata.st_mode & 0o077
+            or parent.resolve(strict=True) != parent):
+        raise ValueError('A private owner-controlled directory is required')
+
+
+def load_connection() -> dict:
+    path = connection_path()
+    private_parent(path)
+    descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    with os.fdopen(descriptor, 'rb') as stream:
+        metadata = os.fstat(stream.fileno())
+        if (not stat.S_ISREG(metadata.st_mode) or metadata.st_uid != os.getuid()
+                or metadata.st_mode & 0o077 or metadata.st_size > 4096):
+            raise ValueError('Invalid memory connection file')
+        value = json.loads(stream.read(4097))
+    if (not isinstance(value, dict) or set(value) != {'schema', 'endpoint', 'token'}
+            or value['schema'] != CONNECTION_SCHEMA or not isinstance(value['token'], str)
+            or TOKEN.fullmatch(value['token']) is None or not isinstance(value['endpoint'], str)):
+        raise ValueError('A dedicated memory connection is required')
     return value
 
 
-def main() -> int:
+def validate_endpoint(connection: dict) -> None:
+    endpoint = Path(connection['endpoint'])
+    private_parent(endpoint)
+    metadata = endpoint.lstat()
+    if (not stat.S_ISSOCK(metadata.st_mode) or metadata.st_uid != os.getuid()
+            or metadata.st_mode & 0o077):
+        raise ValueError('Invalid memory socket')
+
+
+def execute(request: dict) -> dict:
+    request_id = request.get('id') if isinstance(request, dict) else None
+    if (not isinstance(request, dict) or set(request) != {'schema', 'id', 'operation', 'arguments'}
+            or request['schema'] != SCHEMA or type(request_id) is not int or not 0 <= request_id < 2**64
+            or not isinstance(request['operation'], str) or request['operation'] not in OPERATIONS
+            or not isinstance(request['arguments'], dict)):
+        return fail('invalid_request', request_id)
     try:
-        request = {}
-        raw = sys.stdin.buffer.read(MAX_BYTES + 1)
-        if len(raw) > MAX_BYTES:
-            result = fail("request_too_large", "The memory request is too large.")
+        connection = load_connection()
+    except FileNotFoundError:
+        return fail('connection_required', request_id)
+    except (OSError, ValueError, TypeError):
+        return fail('unauthorized', request_id)
+    try:
+        validate_endpoint(connection)
+    except FileNotFoundError:
+        return fail('unavailable', request_id)
+    except (OSError, ValueError):
+        return fail('unauthorized', request_id)
+    payload = json.dumps({**request, 'token': connection['token']}, ensure_ascii=False).encode('utf-8')
+    if len(payload) > MAX_REQUEST:
+        return fail('limit_exceeded', request_id)
+    deadline = time.monotonic() + 130
+    try:
+        with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as stream:
+            stream.settimeout(5)
+            stream.connect(connection['endpoint'])
+            if hasattr(socket, 'SO_PEERCRED'):
+                _, uid, _ = struct.unpack('3i', stream.getsockopt(socket.SOL_SOCKET, socket.SO_PEERCRED, 12))
+                if uid != os.getuid():
+                    return fail('unauthorized', request_id)
+            stream.sendall(payload)
+            stream.shutdown(socket.SHUT_WR)
+            reply = bytearray()
+            while True:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    return fail('timeout', request_id)
+                stream.settimeout(remaining)
+                chunk = stream.recv(min(65536, MAX_RESPONSE + 1 - len(reply)))
+                if not chunk:
+                    break
+                reply.extend(chunk)
+                if len(reply) > MAX_RESPONSE:
+                    return fail('limit_exceeded', request_id)
+        value = json.loads(reply)
+        if (not isinstance(value, dict) or value.get('schema') != SCHEMA or type(value.get('ok')) is not bool
+                or set(value) - {'schema', 'id', 'ok', 'result', 'error'}):
+            return fail('protocol_error', request_id)
+        if not value['ok']:
+            code = value.get('error', {}).get('code', 'protocol_error')
+            if value.get('id') not in (None, request_id) or not isinstance(code, str):
+                return fail('protocol_error', request_id)
+            return fail(code, request_id)
+        if type(value.get('id')) is not int or value['id'] != request_id or not isinstance(value.get('result'), dict) or 'error' in value:
+            return fail('protocol_error', request_id)
+        return value
+    except TimeoutError:
+        return fail('timeout', request_id)
+    except (OSError, ConnectionError):
+        return fail('unavailable', request_id)
+    except (ValueError, TypeError, AttributeError):
+        return fail('protocol_error', request_id)
+
+
+def main() -> None:
+    request_id = None
+    try:
+        raw = sys.stdin.buffer.read(MAX_REQUEST + 1)
+        if len(raw) > MAX_REQUEST:
+            response = fail('limit_exceeded')
         else:
             request = json.loads(raw)
-            result = execute(request)
-    except subprocess.TimeoutExpired:
-        result = fail("timeout", "The operation took too long. Memory data has been preserved; refresh its status before retrying.")
-    except (OSError, ValueError, KeyError, TypeError):
-        result = fail("operation_failed", "The memory operation could not be completed. Check the selected runtime and local files.")
-    result["id"] = request.get("id") if isinstance(request, dict) else None
-    print(json.dumps(result, ensure_ascii=False))
-    return 0
+            request_id = request.get('id') if isinstance(request, dict) else None
+            response = execute(request)
+    except (OSError, ValueError, TypeError, OverflowError, RecursionError):
+        response = fail('invalid_request', request_id)
+    print(json.dumps(response, ensure_ascii=False))
 
 
-if __name__ == "__main__":
-    raise SystemExit(main())
+if __name__ == '__main__':
+    main()

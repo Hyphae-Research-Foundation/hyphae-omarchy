@@ -1,0 +1,194 @@
+{
+  "schema": "hyphae-memory-panel-server-validation-v1",
+  "status": "passed",
+  "repository": "https://github.com/Hyphae-Research-Foundation/hyphae",
+  "reviewed_commit": "a9f7a84d4cf69c8ae371ff484ab82a341a62f13f",
+  "merge_commit": "d823dc4f30fe685e8bc77b1410c4049a03fd9421",
+  "pull_request": "https://github.com/Hyphae-Research-Foundation/hyphae/pull/285",
+  "handler_tests_passed": 3,
+  "real_engine_socket_tests_passed": 2,
+  "workspace": {
+    "passed": 1788,
+    "failed": 0,
+    "ignored": 1,
+    "log_sha256": "5d64d31475a851570187091e2eacef2deef2bec3ed40e87312fd294d550c363b"
+  },
+  "hosted_checks": [
+    {
+      "name": "Quality",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610407744"
+    },
+    {
+      "name": "Review dependency changes",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277337/job/103605804101"
+    },
+    {
+      "name": "Bounded parser fuzzing",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277323/job/103605803913"
+    },
+    {
+      "name": "Native conformance aggregate",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277289/job/103612790880"
+    },
+    {
+      "name": "G2 relational evidence",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277311/job/103605803832"
+    },
+    {
+      "name": "Dry-run crates-io packages",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277290/job/103605803805"
+    },
+    {
+      "name": "Package x86_64-unknown-linux-gnu",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277288/job/103605803866"
+    },
+    {
+      "name": "Dependency and license policy",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277333/job/103605803959"
+    },
+    {
+      "name": "Load and kill/restart soak",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277313/job/103605803829"
+    },
+    {
+      "name": "Dry-run npm packages",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277290/job/103605803838"
+    },
+    {
+      "name": "Package x86_64-apple-darwin",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277288/job/103605803862"
+    },
+    {
+      "name": "Package aarch64-apple-darwin",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277288/job/103605803904"
+    },
+    {
+      "name": "Package x86_64-pc-windows-msvc",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277288/job/103605803803"
+    },
+    {
+      "name": "Gate and publish ${{ inputs.ecosystem }}",
+      "conclusion": "SKIPPED",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277290/job/103605804320"
+    },
+    {
+      "name": "Test (Linux stable)",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610401546"
+    },
+    {
+      "name": "Assemble and verify release candidate",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277288/job/103607457208"
+    },
+    {
+      "name": "Test (Linux MSRV)",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610409072"
+    },
+    {
+      "name": "Publish GitHub release",
+      "conclusion": "SKIPPED",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277288/job/103607599220"
+    },
+    {
+      "name": "Security hard-kill shard 0",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610404761"
+    },
+    {
+      "name": "Security hard-kill shard 1",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610404082"
+    },
+    {
+      "name": "Security hard-kill shard 2",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610410593"
+    },
+    {
+      "name": "Security hard-kill shard 3",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610389516"
+    },
+    {
+      "name": "Test (macOS stable)",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610388753"
+    },
+    {
+      "name": "Test (Windows stable)",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610404217"
+    },
+    {
+      "name": "Public client conformance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610408296"
+    },
+    {
+      "name": "MCP real hosts",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610389322"
+    },
+    {
+      "name": "Python managed v2 wheel",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610409329"
+    },
+    {
+      "name": "Optional framework integrations",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610389215"
+    },
+    {
+      "name": "Security hard-kill aggregate",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610389748"
+    },
+    {
+      "name": "Python managed v2 (Linux)",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610389568"
+    },
+    {
+      "name": "Python managed v2 (macOS)",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610389473"
+    },
+    {
+      "name": "Python managed v2 (Windows)",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610389570"
+    },
+    {
+      "name": "Python Windows async named pipe",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610389460"
+    },
+    {
+      "name": "Python managed v2 aggregate",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610408852"
+    },
+    {
+      "name": "Release readiness",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34713277307/job/103610389904"
+    }
+  ],
+  "vm_binary_sha256": "e9b72e8a1b1e1b61c05fdb23ff8b3896c9b23cf625be1c00cfb4dff518b23228"
+}

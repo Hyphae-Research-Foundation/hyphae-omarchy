@@ -1,0 +1,22 @@
+{
+  "schema": "hyphae-memory-panel-desktop-v1",
+  "status": "passed",
+  "operating_system": "Linux",
+  "architecture": "x86_64",
+  "versions": [
+    "omarchy 4.0.3-1",
+    "quickshell 0.3.1-1",
+    "qt6-base 6.11.2-3"
+  ],
+  "python": "3.14.7",
+  "official_manifest_validation": "passed",
+  "qml_lint": "passed without diagnostics",
+  "production_files": {
+    "BarWidget.qml": "7140d00a6ded3b34ccc8a55d5d23af69ff6b36ad4943d614b9153df27b787f79",
+    "MemoryController.qml": "295f69dea0a74423539f48268ad2512d6cf39ce02e9c552e4ede3c5911facc45",
+    "Panel.qml": "944ea8e45b99719eb2db7b440109676a25683aefd2a500261711b723a81284bc",
+    "scripts/bridge.py": "577a547bdcc9eafbfa5eb0f5b1a79d010158ee79873cdbf9bdab8626ad8e71a4",
+    "manifest.json": "dee0f1d0141f65901900b0c8a7b2d8de4ed5e1a1a73717b6e3558b66274d04fb",
+    "contracts/memory-panel-v1.json": "101daa62272ebccb28958049f42b88131a1a3aa3df0d49a371c6591ff80169f9"
+  }
+}
