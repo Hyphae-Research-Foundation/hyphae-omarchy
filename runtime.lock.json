@@ -1,33 +1,62 @@
 {
   "build": {
     "control_schema": "hyphae-omarchy-control-v1",
-    "profile": "release",
+    "profile": "upstream-dist-and-local-release",
     "protocol_minor": 7,
     "rust": "rustc 1.96.0 (ac68faa20 2026-05-25)",
     "schema": "hyphae-omarchy-runtime-source-v1",
-    "source_commit": "6ef8914381af3073f69dc1981b0ca1f605da73fa",
-    "source_date_epoch": 1789190613,
+    "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+    "source_date_epoch": 1789225721,
+    "source_tree": "410aa930ded834c85741818b3f9ffb0f5b877e31",
     "target": "x86_64-unknown-linux-gnu",
-    "upstream_base": "f65ada5c125ca2b370f7c51630f479a102e93b0c"
+    "upstream_release": {
+      "archive": {
+        "bytes": 9133489,
+        "name": "hyphae-3.0.0-x86_64-unknown-linux-gnu.tar.gz",
+        "sha256": "1bed62d0e35d7754bd7b98bd70ce68608478d0a2ca9862257feb69780e38036d"
+      },
+      "binary": {
+        "bytes": 20816744,
+        "member": "hyphae-3.0.0-x86_64-unknown-linux-gnu/hyphae",
+        "sha256": "e63858a724d8a673a1b88b6f953959b4991d8d811c9148844aea8f13f1b00434"
+      },
+      "certificate_identity": "https://github.com/Hyphae-Research-Foundation/hyphae/.github/workflows/release.yml@refs/pull/284/merge",
+      "certificate_oidc_issuer": "https://token.actions.githubusercontent.com",
+      "g8_closure_run_id": 34702899455,
+      "g8_closure_run_url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34702899455",
+      "g8_readiness_run_id": 34702184771,
+      "publication_kind": "verified-pull-request-artifact-for-pinned-plugin-runtime",
+      "release_evidence_sha256": "ec797a058e0e9b0cdc3bbe71f10c654311edc64870c1e712327be8875d350da3",
+      "release_run_id": 34699387730,
+      "release_run_url": "https://github.com/Hyphae-Research-Foundation/hyphae/actions/runs/34699387730",
+      "release_source_commit": "98792adde4bdb90eca0bee778e5b23a5c7ee804d",
+      "repository": "https://github.com/Hyphae-Research-Foundation/hyphae.git",
+      "schema": "hyphae-omarchy-upstream-release-lock-v1",
+      "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+      "source_equivalence": "git-second-parent-identical-tree-v1",
+      "source_tree": "410aa930ded834c85741818b3f9ffb0f5b877e31",
+      "verification_receipt_sha256": "04bc98c8df6d1ea35f41277d699bc845c474b3b0593600bb85fcd020217da004"
+    },
+    "upstream_repository": "https://github.com/Hyphae-Research-Foundation/hyphae.git"
   },
   "bundle": {
-    "bytes": 12006372,
-    "name": "hyphae-memory-0.1.0-linux-x86_64-6ef8914381af.tar.gz",
-    "sha256": "53692ff83c02d2f05cd7b9d0c9905ebb578114a3b80313f6305d9e7750fb9808",
-    "url": null
+    "bytes": 12021323,
+    "name": "hyphae-memory-0.1.0-linux-x86_64-8fe08dfce903.tar.gz",
+    "sha256": "2c93f3ee4af72615fcff4d4ae390538c7f7db9f5136429ad85a1e36504183255",
+    "url": "https://github.com/Hyphae-Research-Foundation/hyphae-omarchy/releases/download/v0.1.0/hyphae-memory-0.1.0-linux-x86_64-8fe08dfce903.tar.gz"
   },
   "files": {
     "bin/hyphae": {
-      "bytes": 21721232,
-      "sha256": "999186306db030e9643533b73caea7e7d3c53e7e0df8053d066ed9e15f120b01"
+      "bytes": 20816744,
+      "sha256": "e63858a724d8a673a1b88b6f953959b4991d8d811c9148844aea8f13f1b00434"
     },
     "bin/hyphae-embed": {
       "bytes": 8464376,
       "sha256": "beccf53a3238238e3744e29794ff591f91e9a2fd6ef75a1a948b90cd35b53c26"
     },
     "share/DEPENDENCY_LICENSES.txt": {
-      "bytes": 3529843,
-      "sha256": "dcfff35ce1871586d90a48893166c8909bd195972718a21ef9bac7e4033357d6"
+      "bytes": 3463913,
+      "sha256": "5dc6eddb3efe1315601725896f204e2d78e5657e2607d68da6a466886170af91"
     },
     "share/LICENSE": {
       "bytes": 11358,
@@ -37,19 +66,27 @@
       "bytes": 20137,
       "sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2"
     },
+    "share/NATIVE_G8.json": {
+      "bytes": 7195,
+      "sha256": "e9160a020308772c5d08b9f06b12477c3c3bcbe8ee20c259364029bf90ff368b"
+    },
     "share/SBOM.cdx.json": {
-      "bytes": 324377,
-      "sha256": "023fe34a37394754e225b0d732cfecb9af799f87312224529ba5d73590e2411e"
+      "bytes": 319690,
+      "sha256": "7869e7fa687e709d348a4f985b49cefa27167cebc02892f5a06bfbc4d3e6960f"
     },
     "share/SOURCE.json": {
-      "bytes": 397,
-      "sha256": "af0a9720401db2031893a9e8eaf1a09183c3570a701af9b3363cf0d02ff7f42e"
+      "bytes": 2143,
+      "sha256": "b85ce45bc89177c6a0fcc45ba0cf6c4ea5694835fbbd3fd8393b691c18d36f1d"
     },
     "share/THIRD_PARTY_NOTICES.md": {
       "bytes": 3099,
       "sha256": "28f588aa4bb79d71956d4f348e4a007e1c1ab16b4d26001ed07382333eb8040f"
+    },
+    "share/UPSTREAM_RELEASE.json": {
+      "bytes": 1562,
+      "sha256": "e2ad2bdb40f7252151422a56abeeeb9813a65a68742be42d24a257f7a209cdad"
     }
   },
   "schema": "hyphae-omarchy-runtime-lock-v1",
-  "source_commit": "6ef8914381af3073f69dc1981b0ca1f605da73fa"
+  "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191"
 }

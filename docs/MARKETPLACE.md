@@ -1,10 +1,10 @@
-# Marketplace submission draft
+# Marketplace submission
 
 Title: **[Plugin]: Hyphae Memory**
 
 | Form field | Proposed value |
 | --- | --- |
-| Repository URL | `https://github.com/Hyphae-Research-Foundation/hyphae-omarchy` — proposed location; not yet published |
+| Repository URL | `https://github.com/Hyphae-Research-Foundation/hyphae-omarchy` |
 | Category | Developer Tools |
 | Tags | AI, Bar, Quickshell |
 | Suggested tag | Leave empty |
@@ -32,28 +32,27 @@ does not index the home directory or synchronize memories to a cloud service.
 Disabling the widget leaves memory available; removing the integration keeps
 memories, models and backups. Destructive panel actions require confirmation.
 
-The repository includes the source lock, unpublished Hyphae candidate bundle
-and readable patch, test drivers, validation receipts and screenshots. This
-candidate contains native memory changes beyond the published Hyphae 3.0.0
-crates; the runtime must match its lock. See the README and validation report
-for the installation process, tested scope and retrieval measurements.
+The repository includes a public Hyphae source lock, signed runtime provenance,
+test drivers, validation receipts and screenshots. Agent Memory is integrated
+in public Hyphae commit `8fe08dfce903d09e4e5f4b82ba02d3d28ec45191`; its native
+protocol minor 7 operations are newer than the Hyphae 3.0.0 registry packages.
+The plugin installs its exact verified runtime from the versioned HTTPS release
+URL in `runtime.lock.json`. An offline archive is also provided. See the README,
+[release notes](RELEASE.md) and [validation report](VALIDATION.md) for the
+installation process, source provenance, tested scope and retrieval measurements.
 
 Suggested preview: `docs/screenshots/01-memory-status.png`.
 
-## Owner submission steps
+## Submission process
 
-Review the concrete archive, source changes, licensing and validation report.
-Confirm the repository location and publish the reviewed repository and
-runtime assets. Set the runtime lock's HTTPS URL to the published, matching
-asset and rebuild the plugin package before submission; the digest and member
-inventory must continue to identify the tested runtime.
+The [official submission form](https://github.com/omacom/omarchy-plugin-marketplace/issues/new?template=submit-plugin.yml)
+uses the fields above and requires confirmation of repository visibility,
+installation and removal instructions, licensing and external dependencies,
+permission to submit the plugin and preview, and consent for configuration
+changes. The [publishing guide](https://plugins.omarchy.org/publish.html) and
+form were checked on 2026-09-12.
 
-The official form also asks the owner to attest to repository visibility,
-permission to submit the code and preview, documented dependencies, consent
-for configuration changes, and understanding the marketplace's listing
-review. Those owner attestations have not been submitted by this draft.
-
-Open the [official submission form](https://github.com/omacom/omarchy-plugin-marketplace/issues/new?template=submit-plugin.yml)
-using the fields above. The [publishing guide](https://plugins.omarchy.org/publish.html)
-and form were checked on 2026-09-11. The marketplace validates the current
-public commit before a maintainer approves the listing.
+Submit after the versioned downloads and public source installation have been
+verified. Automated validation checks the current public commit; marketplace
+maintainers decide whether to approve the listing. Listing approval does not
+constitute a security review.

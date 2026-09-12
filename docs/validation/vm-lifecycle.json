@@ -1,10 +1,10 @@
 {
   "schema": "hyphae-omarchy-vm-lifecycle-v1",
   "status": "passed",
-  "started": "2026-09-12T05:26:04.059265+00:00",
-  "source_commit": "6ef8914381af3073f69dc1981b0ca1f605da73fa",
-  "package_sha256": "67b15c04acd8f1407a5e8a5870106e339499bc49264a35f92e90757b497bfff6",
-  "runtime_sha256": "53692ff83c02d2f05cd7b9d0c9905ebb578114a3b80313f6305d9e7750fb9808",
+  "started": "2026-09-12T15:59:20.125523+00:00",
+  "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+  "package_sha256": "48dd7124f0efb06e73f26727fb6f32f9679a76d408e070165c3f0e22e734dd40",
+  "runtime_sha256": "2c93f3ee4af72615fcff4d4ae390538c7f7db9f5136429ad85a1e36504183255",
   "steps": [
     "previous-synthetic-profile-preserved",
     "packaged-plugin-passes-official-validator-and-loads",
@@ -22,7 +22,7 @@
     "reinstall-recovers-memory-worker-and-agent-connections"
   ],
   "fresh_profile": true,
-  "binary_sha256": "999186306db030e9643533b73caea7e7d3c53e7e0df8053d066ed9e15f120b01",
+  "binary_sha256": "e63858a724d8a673a1b88b6f953959b4991d8d811c9148844aea8f13f1b00434",
   "embed_sha256": "beccf53a3238238e3744e29794ff591f91e9a2fd6ef75a1a948b90cd35b53c26",
   "packages": [
     "omarchy 4.0.3-1",
@@ -30,5 +30,5 @@
     "hyprland 0.56.2-2",
     "quickshell 0.3.1-1"
   ],
-  "finished": "2026-09-12T05:26:23.831251+00:00"
+  "finished": "2026-09-12T15:59:38.949319+00:00"
 }

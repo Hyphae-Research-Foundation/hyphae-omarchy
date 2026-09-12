@@ -1,9 +1,9 @@
 {
   "schema": "hyphae-omarchy-retrieval-evaluation-v1",
   "status": "measured",
-  "timestamp": "2026-09-12T05:28:45.272074+00:00",
+  "timestamp": "2026-09-12T16:01:06.395608+00:00",
   "fixture_sha256": "3b4c6e2c151c4fae9a0bde28355fe7d51aa66492b07dab31060d790d3c16a8c7",
-  "binary_sha256": "999186306db030e9643533b73caea7e7d3c53e7e0df8053d066ed9e15f120b01",
+  "binary_sha256": "e63858a724d8a673a1b88b6f953959b4991d8d811c9148844aea8f13f1b00434",
   "embed_sha256": "beccf53a3238238e3744e29794ff591f91e9a2fd6ef75a1a948b90cd35b53c26",
   "model": {
     "config_blake3": "a2dadabd189ddc5bffa8db91d3ee1b0872c35b09db2488efab23ae5c1d93cd60",
@@ -32,8 +32,8 @@
       "recall_at_5": 0.25,
       "mrr_at_5": 0.1875,
       "ndcg_at_5": 0.2025563798394494,
-      "p50_ms": 3.3470000000000004,
-      "p95_ms": 4.497
+      "p50_ms": 3.0285,
+      "p95_ms": 3.881
     },
     {
       "mode": "lexical",
@@ -43,8 +43,8 @@
       "recall_at_5": 0.5,
       "mrr_at_5": 0.3611111111111111,
       "ndcg_at_5": 0.3968216255952429,
-      "p50_ms": 3.5705,
-      "p95_ms": 4.406
+      "p50_ms": 3.113,
+      "p95_ms": 4.124
     },
     {
       "mode": "hybrid",
@@ -54,8 +54,8 @@
       "recall_at_5": 0.5833333333333334,
       "mrr_at_5": 0.3111111111111111,
       "ndcg_at_5": 0.3779637601343332,
-      "p50_ms": 20.201999999999998,
-      "p95_ms": 23.631
+      "p50_ms": 18.5485,
+      "p95_ms": 21.796
     },
     {
       "mode": "hybrid",
@@ -65,8 +65,8 @@
       "recall_at_5": 0.5,
       "mrr_at_5": 0.4583333333333333,
       "ndcg_at_5": 0.4692441461309548,
-      "p50_ms": 28.618499999999997,
-      "p95_ms": 33.172
+      "p50_ms": 25.374499999999998,
+      "p95_ms": 30.102
     }
   ],
   "results": [
@@ -75,336 +75,336 @@
       "language": "en",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 3.069
+      "milliseconds": 2.77
     },
     {
       "query": "engine",
       "language": "es",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 3.068
+      "milliseconds": 3.259
     },
     {
       "query": "backup",
       "language": "en",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 3.316
+      "milliseconds": 2.902
     },
     {
       "query": "backup",
       "language": "es",
       "mode": "lexical",
       "rank": 1,
-      "milliseconds": 3.467
+      "milliseconds": 4.102
     },
     {
       "query": "privacy",
       "language": "en",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 3.321
+      "milliseconds": 3.234
     },
     {
       "query": "privacy",
       "language": "es",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 4.377
+      "milliseconds": 2.957
     },
     {
       "query": "isolation",
       "language": "en",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 3.716
+      "milliseconds": 2.793
     },
     {
       "query": "isolation",
       "language": "es",
       "mode": "lexical",
       "rank": 2,
-      "milliseconds": 3.251
+      "milliseconds": 2.978
     },
     {
       "query": "proof",
       "language": "en",
       "mode": "lexical",
       "rank": 1,
-      "milliseconds": 3.063
+      "milliseconds": 3.017
     },
     {
       "query": "proof",
       "language": "es",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 3.674
+      "milliseconds": 3.13
     },
     {
       "query": "remove",
       "language": "en",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 3.74
+      "milliseconds": 2.744
     },
     {
       "query": "remove",
       "language": "es",
       "mode": "lexical",
       "rank": 1,
-      "milliseconds": 3.808
+      "milliseconds": 3.096
     },
     {
       "query": "expiry",
       "language": "en",
       "mode": "lexical",
       "rank": 1,
-      "milliseconds": 3.227
+      "milliseconds": 2.749
     },
     {
       "query": "expiry",
       "language": "es",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 3.275
+      "milliseconds": 2.815
     },
     {
       "query": "journal",
       "language": "en",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 3.373
+      "milliseconds": 3.881
     },
     {
       "query": "journal",
       "language": "es",
       "mode": "lexical",
       "rank": 1,
-      "milliseconds": 3.335
+      "milliseconds": 4.124
     },
     {
       "query": "outage",
       "language": "en",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 3.875
+      "milliseconds": 3.832
     },
     {
       "query": "outage",
       "language": "es",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 4.144
+      "milliseconds": 3.954
     },
     {
       "query": "pause",
       "language": "en",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 4.497
+      "milliseconds": 3.612
     },
     {
       "query": "pause",
       "language": "es",
       "mode": "lexical",
       "rank": 3,
-      "milliseconds": 4.406
+      "milliseconds": 3.242
     },
     {
       "query": "ranking",
       "language": "en",
       "mode": "lexical",
       "rank": 4,
-      "milliseconds": 3.964
+      "milliseconds": 3.04
     },
     {
       "query": "ranking",
       "language": "es",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 3.693
+      "milliseconds": 3.064
     },
     {
       "query": "hosts",
       "language": "en",
       "mode": "lexical",
       "rank": null,
-      "milliseconds": 3.047
+      "milliseconds": 3.138
     },
     {
       "query": "hosts",
       "language": "es",
       "mode": "lexical",
       "rank": 2,
-      "milliseconds": 3.133
+      "milliseconds": 2.917
     },
     {
       "query": "engine",
       "language": "en",
       "mode": "hybrid",
       "rank": 2,
-      "milliseconds": 19.001
+      "milliseconds": 16.937
     },
     {
       "query": "engine",
       "language": "es",
       "mode": "hybrid",
       "rank": null,
-      "milliseconds": 27.616
+      "milliseconds": 24.227
     },
     {
       "query": "backup",
       "language": "en",
       "mode": "hybrid",
       "rank": null,
-      "milliseconds": 18.84
+      "milliseconds": 18.613
     },
     {
       "query": "backup",
       "language": "es",
       "mode": "hybrid",
       "rank": 1,
-      "milliseconds": 28.072
+      "milliseconds": 25.726
     },
     {
       "query": "privacy",
       "language": "en",
       "mode": "hybrid",
       "rank": 3,
-      "milliseconds": 18.997
+      "milliseconds": 17.815
     },
     {
       "query": "privacy",
       "language": "es",
       "mode": "hybrid",
       "rank": null,
-      "milliseconds": 29.165
+      "milliseconds": 28.608
     },
     {
       "query": "isolation",
       "language": "en",
       "mode": "hybrid",
       "rank": null,
-      "milliseconds": 18.896
+      "milliseconds": 18.381
     },
     {
       "query": "isolation",
       "language": "es",
       "mode": "hybrid",
       "rank": 2,
-      "milliseconds": 27.592
+      "milliseconds": 26.649
     },
     {
       "query": "proof",
       "language": "en",
       "mode": "hybrid",
       "rank": 1,
-      "milliseconds": 21.257
+      "milliseconds": 21.796
     },
     {
       "query": "proof",
       "language": "es",
       "mode": "hybrid",
       "rank": null,
-      "milliseconds": 30.394
+      "milliseconds": 26.713
     },
     {
       "query": "remove",
       "language": "en",
       "mode": "hybrid",
       "rank": null,
-      "milliseconds": 22.769
+      "milliseconds": 19.316
     },
     {
       "query": "remove",
       "language": "es",
       "mode": "hybrid",
       "rank": 1,
-      "milliseconds": 24.597
+      "milliseconds": 21.481
     },
     {
       "query": "expiry",
       "language": "en",
       "mode": "hybrid",
       "rank": 1,
-      "milliseconds": 23.571
+      "milliseconds": 19.676
     },
     {
       "query": "expiry",
       "language": "es",
       "mode": "hybrid",
       "rank": null,
-      "milliseconds": 27.707
+      "milliseconds": 25.023
     },
     {
       "query": "journal",
       "language": "en",
       "mode": "hybrid",
       "rank": null,
-      "milliseconds": 23.631
+      "milliseconds": 20.818
     },
     {
       "query": "journal",
       "language": "es",
       "mode": "hybrid",
       "rank": 1,
-      "milliseconds": 33.172
+      "milliseconds": 30.102
     },
     {
       "query": "outage",
       "language": "en",
       "mode": "hybrid",
       "rank": 5,
-      "milliseconds": 19.147
+      "milliseconds": 18.847
     },
     {
       "query": "outage",
       "language": "es",
       "mode": "hybrid",
       "rank": null,
-      "milliseconds": 30.806
+      "milliseconds": 28.249
     },
     {
       "query": "pause",
       "language": "en",
       "mode": "hybrid",
       "rank": null,
-      "milliseconds": 18.382
+      "milliseconds": 18.484
     },
     {
       "query": "pause",
       "language": "es",
       "mode": "hybrid",
       "rank": 1,
-      "milliseconds": 25.013
+      "milliseconds": 24.415
     },
     {
       "query": "ranking",
       "language": "en",
       "mode": "hybrid",
       "rank": 2,
-      "milliseconds": 21.381
+      "milliseconds": 18.154
     },
     {
       "query": "ranking",
       "language": "es",
       "mode": "hybrid",
       "rank": null,
-      "milliseconds": 30.057
+      "milliseconds": 22.311
     },
     {
       "query": "hosts",
       "language": "en",
       "mode": "hybrid",
       "rank": 5,
-      "milliseconds": 21.453
+      "milliseconds": 17.685
     },
     {
       "query": "hosts",
       "language": "es",
       "mode": "hybrid",
       "rank": 1,
-      "milliseconds": 29.866
+      "milliseconds": 24.263
     }
   ]
 }

@@ -1,4 +1,4 @@
-name: Candidate checks
+name: Plugin checks
 
 on: [push, pull_request, workflow_dispatch]
 
@@ -36,7 +36,7 @@ jobs:
         with:
           toolchain: '1.96.0'
           components: clippy,rustfmt
-      - name: Reconstruct the pinned candidate
+      - name: Fetch and verify the pinned public source
         run: python3 scripts/prepare-upstream.py
       - name: Check native code, SDKs, conformance, and documentation
         run: python3 scripts/verify-upstream.py

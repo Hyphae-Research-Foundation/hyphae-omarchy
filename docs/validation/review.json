@@ -1,15 +1,15 @@
 {
-  "schema": "hyphae-candidate-review-v1",
-  "status": "ready-for-owner-review",
-  "timestamp": "2026-09-12T05:36:01.865659+00:00",
-  "source_commit": "6ef8914381af3073f69dc1981b0ca1f605da73fa",
-  "binary_sha256": "999186306db030e9643533b73caea7e7d3c53e7e0df8053d066ed9e15f120b01",
-  "runtime_sha256": "53692ff83c02d2f05cd7b9d0c9905ebb578114a3b80313f6305d9e7750fb9808",
+  "schema": "hyphae-omarchy-release-validation-v1",
+  "status": "verified",
+  "timestamp": "2026-09-12T16:18:26.979310+00:00",
+  "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+  "binary_sha256": "e63858a724d8a673a1b88b6f953959b4991d8d811c9148844aea8f13f1b00434",
+  "runtime_sha256": "2c93f3ee4af72615fcff4d4ae390538c7f7db9f5136429ad85a1e36504183255",
   "native_checks": 21,
   "rust_tests_passed": 1783,
-  "plugin_tests_passed": 6,
+  "plugin_tests_passed": 10,
   "runtime_steps": 14,
   "vm_steps": 14,
-  "publication": "not-published",
-  "hosted_ci": "not-run"
+  "upstream_g8": "closed",
+  "upstream_g8_receipt": "upstream/native-g8.json"
 }

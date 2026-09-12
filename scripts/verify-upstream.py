@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import subprocess
 import time
+from source_lock import load_lock, verify_checkout
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -18,6 +19,7 @@ def main():
     parser.add_argument("--only",nargs="*")
     args=parser.parse_args()
     source=args.source.resolve(strict=True)
+    verify_checkout(source, load_lock()["hyphae"])
     output=ROOT/"target/validation/upstream"
     output.mkdir(parents=True,exist_ok=True)
     environment=os.environ.copy()

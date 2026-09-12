@@ -1,8 +1,8 @@
 {
   "schema": "hyphae-host-run-v1",
   "status": "passed",
-  "timestamp": "2026-09-12T05:26:56.264022+00:00",
-  "binary_sha256": "999186306db030e9643533b73caea7e7d3c53e7e0df8053d066ed9e15f120b01",
+  "timestamp": "2026-09-12T15:55:49.057047+00:00",
+  "binary_sha256": "e63858a724d8a673a1b88b6f953959b4991d8d811c9148844aea8f13f1b00434",
   "image": "9dd78659958191aa41a383428409a93d03a4aa1769bd0aecb80af075e6bd6184",
   "network": "none",
   "exit_code": 0

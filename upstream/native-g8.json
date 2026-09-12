@@ -1,0 +1,200 @@
+{
+  "claims": [
+    "G8"
+  ],
+  "closure_declared": true,
+  "gate": "G8",
+  "release_source_commit": "98792adde4bdb90eca0bee778e5b23a5c7ee804d",
+  "required_platforms": [
+    "linux",
+    "macos",
+    "windows"
+  ],
+  "requirements": {
+    "corruption-matrix": {
+      "linux": {
+        "audit": {
+          "platform": "linux",
+          "requirement": "corruption-matrix",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+          "status": "passed"
+        },
+        "receipt_sha256": "45bea2c492dd9b91cbe0e079f8fb9a4aeded49c0a3ec4492cec46e78e950a190"
+      }
+    },
+    "format2-to-native-migration": {
+      "linux": {
+        "audit": {
+          "platform": "linux",
+          "requirement": "format2-to-native-migration",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+          "status": "passed"
+        },
+        "receipt_sha256": "5f80b6f696f3ef901503fbe7f321fb98a2315ea6f3240b403c1f9d3a78090082"
+      },
+      "macos": {
+        "audit": {
+          "platform": "macos",
+          "requirement": "format2-to-native-migration",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+          "status": "passed"
+        },
+        "receipt_sha256": "8a037a2f945ed3095f14770e01e64969fb88433b61a40b122f1486abfbea6a69"
+      },
+      "windows": {
+        "audit": {
+          "platform": "windows",
+          "requirement": "format2-to-native-migration",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+          "status": "passed"
+        },
+        "receipt_sha256": "836dd96dbb43c4bc68324e3bb1efa5f0bd008f58df195075cc51373e15231c66"
+      }
+    },
+    "independent-restore-verification": {
+      "linux": {
+        "audit": {
+          "platform": "linux",
+          "requirement": "independent-restore-verification",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+          "status": "passed"
+        },
+        "receipt_sha256": "6c80a406ac5ab1338d9e5ae98aa580f8be2e65057f049c49c0ec82fc23653344"
+      },
+      "macos": {
+        "audit": {
+          "platform": "macos",
+          "requirement": "independent-restore-verification",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+          "status": "passed"
+        },
+        "receipt_sha256": "3c17841e0cd42b1f77b0e1626170f97deb75d115b72ffccde2a0608b43e956a4"
+      },
+      "windows": {
+        "audit": {
+          "platform": "windows",
+          "requirement": "independent-restore-verification",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+          "status": "passed"
+        },
+        "receipt_sha256": "1e2f229ce73b0ba6ba27c439a649252b4e13843271b9233f03fc9c5c366ae376"
+      }
+    },
+    "multiplatform-packaging": {
+      "aarch64-apple-darwin": {
+        "audit": {
+          "platform": "aarch64-apple-darwin",
+          "requirement": "multiplatform-packaging",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "98792adde4bdb90eca0bee778e5b23a5c7ee804d",
+          "status": "passed"
+        },
+        "receipt_sha256": "71c51754ba65a9326e655d2c9047cd497f4138c7de1d0950f5db6fec8a6e3032"
+      },
+      "x86_64-apple-darwin": {
+        "audit": {
+          "platform": "x86_64-apple-darwin",
+          "requirement": "multiplatform-packaging",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "98792adde4bdb90eca0bee778e5b23a5c7ee804d",
+          "status": "passed"
+        },
+        "receipt_sha256": "616cb1127e370770eea79a55b2c5b90fadf15f12a7831fdbf41ce00d36564721"
+      },
+      "x86_64-pc-windows-msvc": {
+        "audit": {
+          "platform": "x86_64-pc-windows-msvc",
+          "requirement": "multiplatform-packaging",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "98792adde4bdb90eca0bee778e5b23a5c7ee804d",
+          "status": "passed"
+        },
+        "receipt_sha256": "34653d37573f35854da8b0842c6d3cc5991dd8d498cc67be7556e278853fef6c"
+      },
+      "x86_64-unknown-linux-gnu": {
+        "audit": {
+          "platform": "x86_64-unknown-linux-gnu",
+          "requirement": "multiplatform-packaging",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "98792adde4bdb90eca0bee778e5b23a5c7ee804d",
+          "status": "passed"
+        },
+        "receipt_sha256": "4f1cd341326eb5aa1ae7c57ed68d0a823ff4980905626c83f1c86d5e831d8916"
+      }
+    },
+    "native-soak": {
+      "linux": {
+        "audit": {
+          "platform": "linux",
+          "requirement": "native-soak",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+          "status": "passed"
+        },
+        "receipt_sha256": "acddf8932d7640be9ff6f920a4f9365feeffb6d2b25a398ea3f8525c6aa5e3ed"
+      }
+    },
+    "power-loss-replay": {
+      "linux": {
+        "audit": {
+          "platform": "linux",
+          "requirement": "power-loss-replay",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+          "status": "passed"
+        },
+        "receipt_sha256": "8a2738e737984320c9d1317bf0c7f01a1be2bfb8192e818e9688ef75a2d7d5fb"
+      }
+    },
+    "process-crash-recovery": {
+      "linux": {
+        "audit": {
+          "platform": "linux",
+          "requirement": "process-crash-recovery",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+          "status": "passed"
+        },
+        "receipt_sha256": "0f0c72943b292b49afdc0176cecb9befb6bf6bed563e253170510c1439394b6e"
+      }
+    },
+    "resource-exhaustion": {
+      "linux": {
+        "audit": {
+          "platform": "linux",
+          "requirement": "resource-exhaustion",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+          "status": "passed"
+        },
+        "receipt_sha256": "1e60fef4586f9906d27d8102becaf44dc72ea3334756c0f470358f16a47bbffb"
+      }
+    },
+    "sbom-signatures-provenance": {
+      "release": {
+        "audit": {
+          "platform": "release",
+          "requirement": "sbom-signatures-provenance",
+          "schema": "hyphae-native-g8-receipt-audit-v1",
+          "source_commit": "98792adde4bdb90eca0bee778e5b23a5c7ee804d",
+          "status": "passed"
+        },
+        "receipt_sha256": "30fd462062075f38d443f378df89c97d39d17d06a3d0aea85b546c53911138ff"
+      }
+    }
+  },
+  "schema": "hyphae-native-g8-aggregate-v2",
+  "source_commit": "8fe08dfce903d09e4e5f4b82ba02d3d28ec45191",
+  "source_equivalence": {
+    "method": "git-second-parent-identical-tree-v1",
+    "status": "passed"
+  },
+  "status": "passed"
+}

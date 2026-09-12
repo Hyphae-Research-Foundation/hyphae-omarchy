@@ -117,7 +117,7 @@ def inventories(source, toolchain, revision, epoch, environment):
     application = "hyphae-memory-runtime:" + revision
     sbom = {"bomFormat": "CycloneDX", "specVersion": "1.6", "version": 1,
         "metadata": {"timestamp": datetime.fromtimestamp(epoch, timezone.utc).isoformat(),
-            "component": {"type": "application", "bom-ref": application, "name": "Hyphae Memory runtime", "version": "0.1.0-candidate." + revision[:12]},
+            "component": {"type": "application", "bom-ref": application, "name": "Hyphae Memory runtime", "version": "0.1.0+" + revision[:12]},
             "properties": [{"name": "hyphae:source_commit", "value": revision},
                 {"name": "hyphae:inventory_scope", "value": "Cargo normal and build dependencies resolved for Linux x86_64; excludes dev-only dependencies, OS libraries and the Rust toolchain"}]},
         "components": components,

@@ -4,9 +4,11 @@ Local, durable memory shared by Claude Code, Codex, OpenCode, Pi and other MCP
 clients. A native Omarchy widget opens a panel for memories, capture controls,
 agent connections, verified queries and backups.
 
-This repository is a development candidate. It includes upstream Hyphae
-changes that are not in the published 3.0.0 crates. Use the reviewed runtime
-bundle built from `source.lock.json`; a stock 3.0.0 binary is insufficient.
+Version 0.1.0 includes the pinned Hyphae runtime identified by
+`source.lock.json` and `runtime.lock.json`. Agent Memory is integrated in the
+public Hyphae repository and uses native protocol minor 7. The published
+Hyphae 3.0.0 crates do not contain these memory operations; use this plugin's
+verified runtime bundle.
 
 ![Hyphae Memory running in the Omarchy VM](docs/screenshots/01-memory-status.png)
 
@@ -34,12 +36,12 @@ Install the plugin with Omarchy's plugin installer or copy its source directory
 to `~/.config/omarchy/plugins/org.hyphaeresearch.memory`, then validate and enable
 it with `omarchy plugin validate` / `omarchy plugin enable`.
 
-For local review, the complete offline archive is
-`dist/hyphae-memory-0.1.0.tar.gz`. Extract it into
+The complete offline archive is
+[`hyphae-memory-0.1.0.tar.gz`](https://github.com/Hyphae-Research-Foundation/hyphae-omarchy/releases/download/v0.1.0/hyphae-memory-0.1.0.tar.gz). Extract it into
 `~/.config/omarchy/plugins`, validate the extracted plugin directory, and enable
 `org.hyphaeresearch.memory`. It includes the matching runtime. Python 3.11+
-and Linux x86_64 are required. No public runtime download is configured until
-the owner publishes the reviewed assets.
+and Linux x86_64 are required. A source installation downloads the exact
+runtime archive from the HTTPS release URL in `runtime.lock.json`.
 
 Open **Memory** in the bar, install the verified runtime, then choose **Set up
 local memory**. A packaged plugin contains the matching runtime archive in
@@ -56,6 +58,13 @@ global facts. **Verify query** creates and checks a complete proof of that
 query. **Maintenance** provides health checks, verified backup, restore and
 removal. Edited agent entries are preserved and must be reviewed before
 reconfiguration or removal.
+
+To remove the integration, open **Maintenance**, choose **Remove memory
+integration**, and confirm. This disconnects managed clients and removes the
+user services while preserving memories, models and backups. Then run
+`omarchy plugin remove org.hyphaeresearch.memory` to remove the widget. To hide
+only the widget while keeping memory running, use
+`omarchy plugin disable org.hyphaeresearch.memory`.
 
 ## Optional local semantics
 
@@ -120,18 +129,20 @@ python3 scripts/build-runtime.py --source /path/to/reviewed/hyphae
 python3 scripts/package-plugin.py
 ```
 
-The runtime build checks a clean, exact source revision and uses locked Cargo
-dependencies. Tests include native proof/lifecycle regressions, cross-SDK
+The runtime assembly checks a clean, exact public source revision. It reuses
+the signed Hyphae CLI artifact covered by the exact-source G8 closure and builds
+the optional Candle worker from the same source with locked Cargo dependencies.
+Tests include native proof/lifecycle regressions, cross-SDK
 wire fixtures, pinned host CLIs and lifecycle APIs, and the real Omarchy VM.
 The evaluation fixture is deliberately small and curated; its metrics do not
 establish performance on production histories or superiority over other systems.
 
 See [the Omarchy publishing guide](https://plugins.omarchy.org/publish.html),
 [Hyphae](https://github.com/Hyphae-Research-Foundation/hyphae), and
-[NOTICE](NOTICE) for source and licensing information. Publication is a separate
-owner-reviewed step.
+[NOTICE](NOTICE) for source and licensing information. The [release notes](docs/RELEASE.md)
+describe artifact verification, source provenance and the scope of the tests.
 
 The [validation report](docs/VALIDATION.md) records the tested candidate,
 measurements, screenshots and limits. The [development guide](docs/DEVELOPMENT.md)
-contains the reproducible checks and VM workflow. The [marketplace draft](docs/MARKETPLACE.md)
-provides the proposed listing and remaining owner submission steps.
+contains the reproducible checks and VM workflow. The [marketplace submission](docs/MARKETPLACE.md)
+provides the listing details and review process.

@@ -1,4 +1,4 @@
-# Build and validate the candidate
+# Build and validate the release
 
 Use Linux x86_64, Python 3.11 or newer, Node 26.7.0, and the Rust 1.96.0
 toolchain. Commands below run from the plugin repository. Memory operations,
@@ -13,15 +13,14 @@ python3 scripts/verify-upstream.py
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-The reconstruction helper fetches the exact public base, verifies the local
-Git bundle against `source.lock.json`, and checks out the unpublished candidate.
-It preserves an existing checkout that differs. A readable, binary-capable
-patch is retained in `upstream/`. Keep the candidate in `.upstream/hyphae`;
-temporary directories are unsuitable as the only copy of source changes.
+The preparation helper fetches the exact public commit in `source.lock.json`
+and verifies its Git tree. Existing modified or differently pinned checkouts
+are preserved. The public source lives in `.upstream/hyphae`.
 
-After changing Hyphae, make a local candidate commit and run
-`python3 scripts/lock-upstream.py` to refresh the bundle, patch and lock. Review
-those artifacts before rebuilding and validating the new candidate.
+After an intentional upstream update, use `python3 scripts/lock-upstream.py
+--source /path/to/clean/hyphae` to verify that the revision is publicly
+fetchable before updating the lock. A runtime update also requires fresh
+upstream release provenance and exact-source G8 evidence under `upstream/`.
 
 The verifier records the source commit, selected checks, outcomes and complete
 logs in `target/validation/upstream/`. It covers formatting, clippy, the Rust
@@ -39,18 +38,22 @@ terminal error and can reuse the connection.
 ## Build and exercise the runtime
 
 ```bash
+# Extract the published upstream-evidence archive so its release directory
+# is available as target/publication/upstream-release, then:
 python3 scripts/build-runtime.py --source .upstream/hyphae
+HYPHAE_BINARY="$(python3 scripts/runtime-paths.py hyphae)"
+HYPHAE_EMBED_BINARY="$(python3 scripts/runtime-paths.py hyphae-embed)"
 python3 -m venv target/contract-tools
 target/contract-tools/bin/pip install -r tests/contracts.requirements.txt
 target/contract-tools/bin/python scripts/check-runtime.py \
-  --binary target/native/x86_64-unknown-linux-gnu/release/hyphae \
-  --embed-binary target/embed/x86_64-unknown-linux-gnu/release/hyphae-embed \
+  --binary "$HYPHAE_BINARY" \
+  --embed-binary "$HYPHAE_EMBED_BINARY" \
   --model-dir target/models/bge-small-en-v1.5 \
   --contract-dir .upstream/hyphae/contracts/json-schema \
   --output target/validation/runtime-release.json
 target/contract-tools/bin/python scripts/contracts.py \
   --contract-dir .upstream/hyphae/contracts/json-schema \
-  --embed-binary target/embed/x86_64-unknown-linux-gnu/release/hyphae-embed \
+  --embed-binary "$HYPHAE_EMBED_BINARY" \
   --model-dir target/models/bge-small-en-v1.5 \
   --output target/validation/contracts-release.json
 ```
@@ -61,10 +64,12 @@ run the lexical runtime checks without downloading a model. Schema validation
 is optional for the runtime checker; `jsonschema` is a development dependency
 and is not needed by the installed plugin.
 
-The build requires a clean source checkout at the pinned candidate revision,
-uses locked Cargo dependencies, remaps source paths, inventories every runtime
-member and writes `runtime.lock.json`. Both binaries are built from that
-source. Archive timestamps and file ownership are normalized; cross-machine
+The build requires a clean checkout at the public source pin. It verifies
+and imports the exact signed upstream CLI archive specified by
+`upstream/release.lock.json`, checks the matching G8 closure, builds the Candle
+worker with locked dependencies and remapped source paths, inventories every
+member and writes `runtime.lock.json`. Both binaries correspond to the same
+Git tree; their distinct build origins are retained in `share/SOURCE.json`. Archive timestamps and file ownership are normalized; cross-machine
 bit-for-bit compiler reproducibility has not been established.
 
 ## Real host clients
@@ -78,13 +83,13 @@ Build the QA image with:
 ```bash
 podman build -t localhost/hyphae-omarchy-qa:quattro-20260911 tests/omarchy
 python3 scripts/check-hosts.py \
-  --binary target/native/x86_64-unknown-linux-gnu/release/hyphae
+  --binary "$HYPHAE_BINARY"
 ```
 
 The container uses private profiles, synthetic records and no network. The
 wrapper copies an immutable binary before mounting it; do not mount a Cargo
 output inode that another build may replace. The receipt records the binary
-and container image digests. Host versions are Claude Code 2.1.251, Codex
+and container image digests. Host versions are Claude Code 2.1.260, Codex
 0.153.4, OpenCode 1.18.27 and Pi 0.85.1.
 
 These checks use official CLIs, Pi's real extension loader, OpenCode's native
@@ -139,8 +144,8 @@ does not replace the installed VM's Hyprland/systemd validation.
 
 ```bash
 python3 scripts/evaluate-memory.py \
-  --binary target/native/x86_64-unknown-linux-gnu/release/hyphae \
-  --embed-binary target/embed/x86_64-unknown-linux-gnu/release/hyphae-embed \
+  --binary "$HYPHAE_BINARY" \
+  --embed-binary "$HYPHAE_EMBED_BINARY" \
   --model-dir target/models/bge-small-en-v1.5 \
   --output target/validation/retrieval-release.json
 python3 scripts/package-plugin.py
@@ -153,6 +158,5 @@ transport. See the validation report for observations and their limits.
 
 GitHub Actions runs the plugin and native/SDK checks. Actual host loaders,
 model evaluation, packaged installation and desktop behavior also require
-the retained local QA evidence. Local checks do not confer the upstream
-hosted G7/G8 release gates. Publication and marketplace submission remain
-separate owner-reviewed actions.
+the retained local QA evidence. The retained upstream G8 closure and signed CLI provenance complement these
+plugin-specific checks. Marketplace listing approval remains a maintainer action.
