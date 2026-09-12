@@ -1,77 +1,68 @@
-# Release validation
+# Validation of Hyphae Memory 0.2.0
 
-Hyphae Memory 0.1.0 is bound to public Hyphae source
-`8fe08dfce903d09e4e5f4b82ba02d3d28ec45191` and native protocol minor 7. The runtime archive SHA-256 is
-`2c93f3ee4af72615fcff4d4ae390538c7f7db9f5136429ad85a1e36504183255`. The CLI is the exact signed upstream artifact
-whose tree matches this merge; the optional Candle worker is built from that
-same source with Rust 1.96.0 for Linux x86_64.
+The client and the independent server were checked on 12 September 2026.
+The receipts below record the tested production-file hashes, server source,
+real socket results and actual Omarchy desktop environment. Release
+`package.json` binds the final clean source commit and every archive member.
 
-## Evidence
-
-| Check | Result | Receipt |
+| Surface | Result | Receipt |
 | --- | --- | --- |
-| Native workspace and development checks | 21 checks passed; 1,783 Rust tests passed, one ignored in the normal run and exercised separately | [Upstream](validation/upstream.json) |
-| Python / TypeScript / embedding component | 102 Python tests (15 optional/platform skips), 52 TypeScript tests, 3 embedding tests; generated models and cross-SDK fixture passed | [Upstream](validation/upstream.json) |
-| Plugin installer, cancellation and source pin | 10 tests passed, including tamper/preservation, timeout descendants and source drift | [Review](validation/review.json) |
-| Release runtime and operator JSON | 14 lifecycle/proof steps passed with schema validation | [Runtime](validation/runtime.json) |
-| Local model and worker contracts | Real model manifest, Unicode inference, reranking, fingerprint rejection and request validation passed | [Contracts](validation/contracts.json) |
-| Four official host clients | Registration, loader/callback interfaces, edited-file protection, reconnect and removal passed with networking disabled | [Hosts](validation/hosts.json), [binary/image identity](validation/hosts-run.json) |
-| Packaged Omarchy lifecycle | 14 steps passed, including systemd restart, corrupt/valid restore, removal, reinstall and restoring an older credential authority | [VM](validation/vm-lifecycle.json) |
-| Actual desktop | QML lint and six inspected screenshots; bar open, keyboard search, proof verification, cancellation, explicit global sharing and maintenance controls exercised | [Visual](validation/visual.json), [installed files](validation/production-files.json) |
-| Public source | Exact public commit fetched; Git tree and clean checkout verified | [Source](validation/source-reconstruction.json) |
-| Runtime contents | 10 inventoried members; CycloneDX 1.6 validation, 325 normal/build dependencies and retained license texts | [Inventory](validation/runtime-inventory.json) |
+| Python client | 14 real-socket tests passed | [Client](validation/client.json) |
+| Independent server | 3 handler tests and 2 real-engine socket tests passed | [Server](validation/server.json) |
+| Full Hyphae workspace | 1,788 passed; 1 hosted-only test skipped locally | [Server](validation/server.json) |
+| Omarchy 4.0.3 / Quickshell 0.3.1 / Qt 6.11.2 | Official manifest validation and QML lint passed without diagnostics | [Desktop](validation/desktop.json) |
+| Direct requests using the panel credential | 9 boundary and memory behavior checks passed | [Boundary](validation/boundary.json) |
+| Service outage, restart and client removal | 5 lifecycle checks passed | [Lifecycle](validation/lifecycle.json) |
 
-The VM uses Omarchy/settings 4.0.3-1, Hyprland 0.56.2-2 and Quickshell 0.3.1-1
-on QEMU/KVM. The ISO package version is authoritative; its source version text
-still says alpha. Repeated diagnostic profiles were preserved in the private
-guest QA directory before the main lifecycle fixture was initialized.
+## Authority and memory behavior
 
-The VM receipt records the archive tested at that point. Documentation and
-receipt packaging can change the outer archive digest afterward; the installed
-production-file inventory and runtime digest bind the behavior tested here.
-The final archive identity is in `dist/package.json`, with a separate final
-installation receipt retained under `dist/validation/`.
+The independent server is implemented in
+[Hyphae PR #285](https://github.com/Hyphae-Research-Foundation/hyphae/pull/285),
+at reviewed source `a9f7a84d4cf69c8ae371ff484ab82a341a62f13f`.
+All 33 applicable hosted checks passed before its merge into `main`; the two
+publication-only jobs were skipped as expected. The existing macOS semantic
+migration test needed a retry on that same commit after a directory-lock
+failure. The native aggregate was then rerun against the successful CI result.
+The locally skipped SDK test belongs to the passing hosted client-conformance
+job, which installs the required TypeScript toolchain.
 
-## Curated retrieval fixture
+Real requests sent directly to the dedicated server socket with a valid panel
+credential could not reach operator commands, generic native requests, agent
+configuration, restore, install, service activation or proxy operations.
+Unknown arguments and client-selected paths were rejected. The checks also
+covered wrong credentials, bounded input, existing socket/configuration
+preservation and server-assigned provenance.
 
-There are 12 annotated memories, 36 distractors and one separate-project
-canary. The 12 English and 12 Spanish queries are each measured in lexical and
-hybrid mode, for 48 observations. No project-isolation leak was observed.
+Memory writes, project isolation, explicit global sharing, lexical and hybrid
+queries, complete proof verification, forgetting and verified backup creation
+worked with the actual engine. Eleven independently installed configuration
+and credential files retained their hashes through denied requests, permitted
+memory operations and client removal.
 
-| Language | Mode | Recall@1 | Recall@5 | MRR@5 | p50 ms | p95 ms |
-| --- | --- | ---: | ---: | ---: | ---: | ---: |
-| EN | lexical | 16.7% | 25.0% | 0.188 | 3.03 | 3.88 |
-| ES | lexical | 25.0% | 50.0% | 0.361 | 3.11 | 4.12 |
-| EN | hybrid | 16.7% | 58.3% | 0.311 | 18.55 | 21.80 |
-| ES | hybrid | 41.7% | 50.0% | 0.458 | 25.37 | 30.10 |
+## Desktop and lifecycle
 
-[Raw measurements](validation/retrieval.json) identify the fixture, model and
-binaries. Latency includes the agent-ui subprocess and transport on a shared
-development workstation with a warm local CPU worker. This small curated
-fixture does not establish production quality, answer correctness, independent
-model execution, or superiority over other systems. The English-oriented BGE
-reference model did not improve every Spanish recall measure.
+The installed production files match the hashes in the desktop receipt. The
+three tabs were exercised in the actual Omarchy VM: manual capture, Enter
+search, verified queries, forgetting confirmation, Escape cancellation/close,
+global sharing and backup creation. Screenshots use synthetic test memories:
 
-## Limits and release status
+- [Connection status](screenshots/01-memory-status.png)
+- [Memory search](screenshots/02-memory-search.png)
+- [Verified query](screenshots/03-query-verification.png)
+- [Backups](screenshots/04-memory-backups.png)
 
-Complete proof and witness data share the native 16-MiB response bound.
-Larger retained histories can exceed it; the request returns `limit_exceeded`
-and ordinary recall remains available. A native regression reproduced the
-previous timeout at the encoding boundary and verifies a terminal error plus
-continued use of the connection.
+Stopping the independently managed listener reports an unavailable service
+without replacing its credential. Restarting it reuses that credential.
+Disabling and removing the plugin with Omarchy's official commands leaves
+the data, listener, memory/embedding services and independent files intact.
+Reinstalling the client reconnects to the same service.
 
-Witnesses may contain retained directory data and stay private. Keep an anchor
-separately for independent verification. Forget/expiry affects live recall;
-historical versions and backups are not a secure-erase guarantee.
+## Scope
 
-Host checks use real CLIs and lifecycle APIs without paid model conversations.
-Codex still requires review of changed non-managed hooks through `/hooks`.
-The [upstream G8 closure](../upstream/native-g8.json) covers the exact Hyphae
-source and signed native engine artifacts. G7 remained in authority mode;
-no new dedicated-hardware measurements are claimed. The optional worker and
-Omarchy integration are covered by the additional checks recorded above.
-The repository workflow verifies the public source and plugin on GitHub;
-release assets retain the final publication and installation records.
-
-See [development](DEVELOPMENT.md) for commands and [the marketplace submission](MARKETPLACE.md)
-for listing details and the review process.
+The validated desktop environment is Linux x86_64 on Omarchy 4.0.3. Python
+client CI also exercises the supported 3.11 and 3.13 runtimes. The service API
+and credential enforce the operation boundary; they do not sandbox arbitrary
+code already running with the same user's filesystem permissions. Native
+proofs retain their 16-MiB bound and establish retrieval at a snapshot, not
+the truth of remembered statements. Marketplace listing requires the
+maintainer's fresh review of the submitted commit.

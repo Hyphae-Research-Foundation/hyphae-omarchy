@@ -1,0 +1,12 @@
+{
+  "schema": "hyphae-memory-panel-vm-lifecycle-v1",
+  "status": "passed",
+  "steps": [
+    "offline-listener-reported-without-reprovisioning",
+    "external-restart-reuses-dedicated-credential",
+    "widget-disable-preserves-independent-service",
+    "official-plugin-removal-preserves-data-services-and-client-credential",
+    "independent-agent-configurations-and-native-credentials-preserved"
+  ],
+  "independent_files_preserved": 11
+}

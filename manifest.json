@@ -2,18 +2,30 @@
   "schemaVersion": 1,
   "id": "org.hyphaeresearch.memory",
   "name": "Hyphae Memory",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Hyphae Research Foundation",
   "license": "Apache-2.0",
-  "description": "Local, durable agent memory with provenance and verifiable recall.",
-  "kinds": ["bar-widget"],
-  "entryPoints": { "barWidget": "BarWidget.qml" },
+  "description": "A local memory panel using a dedicated, restricted Hyphae service connection.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
   "barWidget": {
     "displayName": "Hyphae Memory",
     "category": "System",
     "allowMultiple": false,
     "defaultSection": "right",
-    "defaults": { "showLabel": true },
-    "schema": [{ "key": "showLabel", "type": "bool", "label": "Show label" }]
+    "defaults": {
+      "showLabel": true
+    },
+    "schema": [
+      {
+        "key": "showLabel",
+        "type": "bool",
+        "label": "Show label"
+      }
+    ]
   }
 }

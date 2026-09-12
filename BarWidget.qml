@@ -36,10 +36,8 @@ Ui.BarWidget {
     anchors.fill: parent
     bar: root.bar
     text: root.setting("showLabel", true) && !root.vertical ? "◈ Memory" : "◈"
-    dimmed: !backend.status.service_active
-    tooltipText: !backend.status.installed ? "Set up Hyphae Memory"
-      : backend.status.capture_paused ? "Hyphae Memory · capture paused"
-      : backend.status.service_active ? "Hyphae Memory · local and active" : "Hyphae Memory · service stopped"
+    dimmed: !backend.status.connected
+    tooltipText: backend.status.connected ? "Hyphae Memory · connected" : "Hyphae Memory · connection unavailable"
     onPressed: function(buttonCode) { if (buttonCode === Qt.LeftButton) root.toggle() }
   }
 }
