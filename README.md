@@ -35,6 +35,15 @@ Prepare Hyphae and its dedicated desktop connection independently using the
 A build providing the version-1 memory-panel interface is required. Older
 Hyphae 3.0.0 registry packages predate this interface.
 
+Automatic agent capture uses the Hyphae executable configured in each agent.
+Use a runtime containing
+[Hyphae PR #287](https://github.com/Hyphae-Research-Foundation/hyphae/pull/287)
+(merge `8992f91754e0e55f5329d770bc29197d90513f00` or later). It fixes safe memory
+notes discarded when other parts of a response contain paths or identifiers.
+Update and activate the runtime through the independently managed Hyphae
+installation, then complete any hook review requested by the agent. Updating
+this desktop client alone does not replace the agents' executable.
+
 The client reads `~/.config/hyphae-panel/client.json` (respecting
 `XDG_CONFIG_HOME`). `HYPHAE_MEMORY_PANEL_CONFIG` can select another connection
 file. Hyphae creates the file with its dedicated endpoint and credential; keep
