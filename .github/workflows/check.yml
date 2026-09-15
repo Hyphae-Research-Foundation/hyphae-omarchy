@@ -21,8 +21,14 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24.16.0'
+          package-manager-cache: false
       - name: Test real socket framing and credential boundaries
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Test process admission limits and failure messages
+        run: node tests/test_process_limits.cjs
       - name: Check syntax and package the client
         run: |
           python3 -m compileall -q scripts tests
