@@ -1,0 +1,56 @@
+{
+  "schema": "hyphae-memory-process-validation-v1",
+  "version": "0.2.1",
+  "date": "2026-09-15",
+  "environment": {
+    "omarchy": "4.0.3",
+    "quickshell": "0.3.1",
+    "qt": "6.11.2",
+    "python": "3.14.7",
+    "platform": "Linux x86_64 QA VM"
+  },
+  "officialManifestValidation": {
+    "command": "omarchy plugin validate <staged-plugin>",
+    "exitCode": 0
+  },
+  "qmlLint": {
+    "exitCode": 0,
+    "diagnostics": [
+      "QProcess::ExitStatus parameter metadata missing in Quickshell type information (signal-handler-parameters). Native tests verified delivery of the normal-exit signal."
+    ],
+    "files": [
+      "BoundedMemoryProcess.qml",
+      "MemoryController.qml"
+    ]
+  },
+  "pythonClientTests": {
+    "passed": 29
+  },
+  "javascriptLimitsTests": {
+    "passed": 8
+  },
+  "nativeSmoke": {
+    "passed": 5,
+    "report": "process-native-0.2.1.json",
+    "testOnlyOverrides": [
+      "200 ms lifetime for the deadline scenario",
+      "absolute nonexistent interpreter in a separate missing-dependency copy"
+    ]
+  },
+  "productionFiles": {
+    "BoundedMemoryProcess.qml": "d0d179af8facc0a153d216b29ea99bd3ea29cee594d1f437f04a1130efcbe647",
+    "ProcessLimits.js": "966101eb414d5b0f748866b32841dc2bdeeaec140dea700024877e057e0cd591",
+    "MemoryController.qml": "b5fcc0d31d722b4f236370b3a601daef69938c657ea546d7d5212483f4334555",
+    "scripts/bridge.py": "113a7a756f90740149f54a66d1142cfb85287656a08e59cadcfcdfd399f4eb44",
+    "manifest.json": "015c67f5d783478571e43fd0141be5d0a2523db81e51f8973325ed8cb1eb5ea7",
+    "BarWidget.qml": "7140d00a6ded3b34ccc8a55d5d23af69ff6b36ad4943d614b9153df27b787f79",
+    "Panel.qml": "944ea8e45b99719eb2db7b440109676a25683aefd2a500261711b723a81284bc",
+    "contracts/memory-panel-v1.json": "101daa62272ebccb28958049f42b88131a1a3aa3df0d49a371c6591ff80169f9"
+  },
+  "testHarnessSha256": "44b8f29d3d85ee7f82414ab0a39836efb2d4dd81ffd15471fa1b04dfdcc208c9",
+  "limits": [
+    "QML admission/retention bounds exclude transient Qt read/decode allocations and total process memory.",
+    "The native deadline fixture exercises TERM cleanup with a shortened lifetime; it does not simulate a kernel-unreapable process or independently exercise SIGKILL escalation.",
+    "Historical desktop screenshots and full-engine receipts remain scoped to 0.2.0."
+  ]
+}

@@ -1,0 +1,322 @@
+{
+  "schema": 1,
+  "scope": "Native guarded-code smoke tests; private fixtures only",
+  "sourceHashes": {
+    "BoundedMemoryProcess.qml": "d0d179af8facc0a153d216b29ea99bd3ea29cee594d1f437f04a1130efcbe647",
+    "ProcessLimits.js": "966101eb414d5b0f748866b32841dc2bdeeaec140dea700024877e057e0cd591",
+    "MemoryController.qml": "b5fcc0d31d722b4f236370b3a601daef69938c657ea546d7d5212483f4334555",
+    "scripts/bridge.py": "113a7a756f90740149f54a66d1142cfb85287656a08e59cadcfcdfd399f4eb44"
+  },
+  "liveServiceUsed": false,
+  "liveMemoryConfigurationUsed": false,
+  "persistentMemoryWrites": false,
+  "nativeLintRun": false,
+  "knownLintDiagnostic": "QProcess::ExitStatus signal parameter metadata warning; native success path verifies runtime delivery",
+  "cases": [
+    {
+      "case": "unicode",
+      "overrides": [],
+      "copiedSourceHashes": {
+        "BoundedMemoryProcess.qml": "d0d179af8facc0a153d216b29ea99bd3ea29cee594d1f437f04a1130efcbe647",
+        "ProcessLimits.js": "966101eb414d5b0f748866b32841dc2bdeeaec140dea700024877e057e0cd591",
+        "MemoryController.qml": "b5fcc0d31d722b4f236370b3a601daef69938c657ea546d7d5212483f4334555",
+        "scripts/bridge.py": "113a7a756f90740149f54a66d1142cfb85287656a08e59cadcfcdfd399f4eb44"
+      },
+      "events": [
+        {
+          "operation": "status",
+          "pid": 2012132,
+          "event": "completed"
+        },
+        {
+          "ok": true,
+          "reason": "settled",
+          "completions": 1,
+          "failures": 0,
+          "event": "done"
+        }
+      ],
+      "postReapObservations": [
+        {
+          "pid": 2012132,
+          "absentWhenCallbackObserved": true
+        }
+      ],
+      "exitCode": 0,
+      "ownedProcessGroupEmptyAfterExit": true,
+      "passed": true,
+      "fixtureRequests": [
+        {
+          "operation": "status",
+          "pid": 2012132,
+          "environmentNames": [
+            "HYPHAE_MEMORY_PANEL_CONFIG",
+            "LC_ALL",
+            "XDG_CONFIG_HOME"
+          ],
+          "isolatedInterpreter": true
+        }
+      ],
+      "overlappingChildConnections": [],
+      "remainingChildren": [],
+      "fixtureErrors": [],
+      "diagnostics": "  INFO: Launching config: \"$FIXTURE/unicode/shell.qml\"\n  INFO: Shell ID: \"158943c42e936c7c2545c57020184ceb\" Path ID \"158943c42e936c7c2545c57020184ceb\"\n  INFO: Saving logs to \"$FIXTURE/unicode/runtime/quickshell/by-id/hk4715vdflt/log.qslog\"\n  INFO: Configuration Loaded\n DEBUG qml: HYPHAE_NATIVE_SMOKE {\"operation\":\"status\",\"pid\":2012132,\"event\":\"completed\"}\n DEBUG qml: HYPHAE_NATIVE_SMOKE {\"ok\":true,\"reason\":\"settled\",\"completions\":1,\"failures\":0,\"event\":\"done\"}\n"
+    },
+    {
+      "case": "queue",
+      "overrides": [],
+      "copiedSourceHashes": {
+        "BoundedMemoryProcess.qml": "d0d179af8facc0a153d216b29ea99bd3ea29cee594d1f437f04a1130efcbe647",
+        "ProcessLimits.js": "966101eb414d5b0f748866b32841dc2bdeeaec140dea700024877e057e0cd591",
+        "MemoryController.qml": "b5fcc0d31d722b4f236370b3a601daef69938c657ea546d7d5212483f4334555",
+        "scripts/bridge.py": "113a7a756f90740149f54a66d1142cfb85287656a08e59cadcfcdfd399f4eb44"
+      },
+      "events": [
+        {
+          "operation": "status",
+          "pid": 2012141,
+          "event": "completed"
+        },
+        {
+          "operation": "projects",
+          "pid": 2012147,
+          "event": "completed"
+        },
+        {
+          "operation": "backups",
+          "pid": 2012154,
+          "event": "completed"
+        },
+        {
+          "ok": true,
+          "reason": "settled",
+          "completions": 3,
+          "failures": 0,
+          "event": "done"
+        }
+      ],
+      "postReapObservations": [
+        {
+          "pid": 2012141,
+          "absentWhenCallbackObserved": true
+        },
+        {
+          "pid": 2012147,
+          "absentWhenCallbackObserved": true
+        },
+        {
+          "pid": 2012154,
+          "absentWhenCallbackObserved": true
+        }
+      ],
+      "exitCode": 0,
+      "ownedProcessGroupEmptyAfterExit": true,
+      "passed": true,
+      "fixtureRequests": [
+        {
+          "operation": "status",
+          "pid": 2012141,
+          "environmentNames": [
+            "HYPHAE_MEMORY_PANEL_CONFIG",
+            "LC_ALL",
+            "XDG_CONFIG_HOME"
+          ],
+          "isolatedInterpreter": true
+        },
+        {
+          "operation": "projects",
+          "pid": 2012147,
+          "environmentNames": [
+            "HYPHAE_MEMORY_PANEL_CONFIG",
+            "LC_ALL",
+            "XDG_CONFIG_HOME"
+          ],
+          "isolatedInterpreter": true
+        },
+        {
+          "operation": "backups",
+          "pid": 2012154,
+          "environmentNames": [
+            "HYPHAE_MEMORY_PANEL_CONFIG",
+            "LC_ALL",
+            "XDG_CONFIG_HOME"
+          ],
+          "isolatedInterpreter": true
+        }
+      ],
+      "overlappingChildConnections": [],
+      "remainingChildren": [],
+      "fixtureErrors": [],
+      "diagnostics": "  INFO: Launching config: \"$FIXTURE/queue/shell.qml\"\n  INFO: Shell ID: \"38780fa152540d121a219d0b81d16fae\" Path ID \"38780fa152540d121a219d0b81d16fae\"\n  INFO: Saving logs to \"$FIXTURE/queue/runtime/quickshell/by-id/qk4716vdflt/log.qslog\"\n  INFO: Configuration Loaded\n DEBUG qml: HYPHAE_NATIVE_SMOKE {\"operation\":\"status\",\"pid\":2012141,\"event\":\"completed\"}\n DEBUG qml: HYPHAE_NATIVE_SMOKE {\"operation\":\"projects\",\"pid\":2012147,\"event\":\"completed\"}\n DEBUG qml: HYPHAE_NATIVE_SMOKE {\"operation\":\"backups\",\"pid\":2012154,\"event\":\"completed\"}\n DEBUG qml: HYPHAE_NATIVE_SMOKE {\"ok\":true,\"reason\":\"settled\",\"completions\":3,\"failures\":0,\"event\":\"done\"}\n"
+    },
+    {
+      "case": "uncertain",
+      "overrides": [],
+      "copiedSourceHashes": {
+        "BoundedMemoryProcess.qml": "d0d179af8facc0a153d216b29ea99bd3ea29cee594d1f437f04a1130efcbe647",
+        "ProcessLimits.js": "966101eb414d5b0f748866b32841dc2bdeeaec140dea700024877e057e0cd591",
+        "MemoryController.qml": "b5fcc0d31d722b4f236370b3a601daef69938c657ea546d7d5212483f4334555",
+        "scripts/bridge.py": "113a7a756f90740149f54a66d1142cfb85287656a08e59cadcfcdfd399f4eb44"
+      },
+      "events": [
+        {
+          "operation": "status",
+          "pid": 2012163,
+          "event": "completed"
+        },
+        {
+          "code": "outcome_unknown",
+          "operation": "store",
+          "pending": 0,
+          "event": "failure"
+        },
+        {
+          "ok": true,
+          "reason": "settled",
+          "completions": 1,
+          "failures": 1,
+          "event": "done"
+        }
+      ],
+      "postReapObservations": [
+        {
+          "pid": 2012163,
+          "absentWhenCallbackObserved": true
+        },
+        {
+          "pid": 2012163,
+          "absentWhenFailureObserved": true
+        },
+        {
+          "pid": 2012165,
+          "absentWhenFailureObserved": true
+        }
+      ],
+      "exitCode": 0,
+      "ownedProcessGroupEmptyAfterExit": true,
+      "passed": true,
+      "fixtureRequests": [
+        {
+          "operation": "status",
+          "pid": 2012163,
+          "environmentNames": [
+            "HYPHAE_MEMORY_PANEL_CONFIG",
+            "LC_ALL",
+            "XDG_CONFIG_HOME"
+          ],
+          "isolatedInterpreter": true
+        },
+        {
+          "operation": "store",
+          "pid": 2012165,
+          "environmentNames": [
+            "HYPHAE_MEMORY_PANEL_CONFIG",
+            "LC_ALL",
+            "XDG_CONFIG_HOME"
+          ],
+          "isolatedInterpreter": true
+        }
+      ],
+      "overlappingChildConnections": [],
+      "remainingChildren": [],
+      "fixtureErrors": [],
+      "diagnostics": "  INFO: Launching config: \"$FIXTURE/uncertain/shell.qml\"\n  INFO: Shell ID: \"6649364d2a55b454c9cba83baa5ca724\" Path ID \"6649364d2a55b454c9cba83baa5ca724\"\n  INFO: Saving logs to \"$FIXTURE/uncertain/runtime/quickshell/by-id/cl4716vdflt/log.qslog\"\n  INFO: Configuration Loaded\n DEBUG qml: HYPHAE_NATIVE_SMOKE {\"operation\":\"status\",\"pid\":2012163,\"event\":\"completed\"}\n DEBUG qml: HYPHAE_NATIVE_SMOKE {\"code\":\"outcome_unknown\",\"operation\":\"store\",\"pending\":0,\"event\":\"failure\"}\n DEBUG qml: HYPHAE_NATIVE_SMOKE {\"ok\":true,\"reason\":\"settled\",\"completions\":1,\"failures\":1,\"event\":\"done\"}\n"
+    },
+    {
+      "case": "deadline",
+      "overrides": [
+        {
+          "file": "ProcessLimits.js",
+          "testOnly": "LIFETIME_MS: 140000 -> 200"
+        }
+      ],
+      "copiedSourceHashes": {
+        "BoundedMemoryProcess.qml": "d0d179af8facc0a153d216b29ea99bd3ea29cee594d1f437f04a1130efcbe647",
+        "ProcessLimits.js": "69fecc5b3d84258410254a4a92d18b652e44c97381abe08722de399b797ae314",
+        "MemoryController.qml": "b5fcc0d31d722b4f236370b3a601daef69938c657ea546d7d5212483f4334555",
+        "scripts/bridge.py": "113a7a756f90740149f54a66d1142cfb85287656a08e59cadcfcdfd399f4eb44"
+      },
+      "events": [
+        {
+          "code": "timeout",
+          "operation": "status",
+          "pending": 0,
+          "event": "failure"
+        },
+        {
+          "ok": true,
+          "reason": "settled",
+          "completions": 0,
+          "failures": 1,
+          "event": "done"
+        }
+      ],
+      "postReapObservations": [
+        {
+          "pid": 2012191,
+          "absentWhenFailureObserved": true
+        }
+      ],
+      "exitCode": 0,
+      "ownedProcessGroupEmptyAfterExit": true,
+      "passed": true,
+      "fixtureRequests": [
+        {
+          "operation": "status",
+          "pid": 2012191,
+          "environmentNames": [
+            "HYPHAE_MEMORY_PANEL_CONFIG",
+            "LC_ALL",
+            "XDG_CONFIG_HOME"
+          ],
+          "isolatedInterpreter": true
+        }
+      ],
+      "overlappingChildConnections": [],
+      "remainingChildren": [],
+      "fixtureErrors": [],
+      "diagnostics": "  INFO: Launching config: \"$FIXTURE/deadline/shell.qml\"\n  INFO: Shell ID: \"79b9cb460a0bad41629355aeefc17eed\" Path ID \"79b9cb460a0bad41629355aeefc17eed\"\n  INFO: Saving logs to \"$FIXTURE/deadline/runtime/quickshell/by-id/4m4717vdflt/log.qslog\"\n  INFO: Configuration Loaded\n DEBUG qml: HYPHAE_NATIVE_SMOKE {\"code\":\"timeout\",\"operation\":\"status\",\"pending\":0,\"event\":\"failure\"}\n DEBUG qml: HYPHAE_NATIVE_SMOKE {\"ok\":true,\"reason\":\"settled\",\"completions\":0,\"failures\":1,\"event\":\"done\"}\n"
+    },
+    {
+      "case": "missing",
+      "overrides": [
+        {
+          "file": "BoundedMemoryProcess.qml",
+          "testOnly": "Interpreter is an absolute nonexistent fixture path"
+        }
+      ],
+      "copiedSourceHashes": {
+        "BoundedMemoryProcess.qml": "2cf98515ac65accf6c40cc2ac97bd28227f47f324d838058d6ea3763903bd5ec",
+        "ProcessLimits.js": "966101eb414d5b0f748866b32841dc2bdeeaec140dea700024877e057e0cd591",
+        "MemoryController.qml": "b5fcc0d31d722b4f236370b3a601daef69938c657ea546d7d5212483f4334555",
+        "scripts/bridge.py": "113a7a756f90740149f54a66d1142cfb85287656a08e59cadcfcdfd399f4eb44"
+      },
+      "events": [
+        {
+          "pid": 0,
+          "code": "startup",
+          "submitted": false,
+          "event": "failure"
+        },
+        {
+          "ok": true,
+          "reason": "settled",
+          "completions": 0,
+          "failures": 1,
+          "event": "done"
+        }
+      ],
+      "postReapObservations": [],
+      "exitCode": 0,
+      "ownedProcessGroupEmptyAfterExit": true,
+      "passed": true,
+      "fixtureRequests": [],
+      "overlappingChildConnections": [],
+      "remainingChildren": [],
+      "fixtureErrors": [],
+      "diagnostics": "  INFO: Launching config: \"$FIXTURE/missing/shell.qml\"\n  INFO: Shell ID: \"3f73eaf9df91c4bd77e3779a266a9ede\" Path ID \"3f73eaf9df91c4bd77e3779a266a9ede\"\n  INFO: Saving logs to \"$FIXTURE/missing/runtime/quickshell/by-id/zm4719vdflt/log.qslog\"\n  INFO: Configuration Loaded\n  WARN: Process failed to start, likely because the binary could not be found. Command: QList(\"$FIXTURE/missing/nonexistent-python\", \"-I\", \"-S\", \"-B\", \"$FIXTURE/missing/scripts/bridge.py\")\n DEBUG qml: HYPHAE_NATIVE_SMOKE {\"pid\":0,\"code\":\"startup\",\"submitted\":false,\"event\":\"failure\"}\n DEBUG qml: HYPHAE_NATIVE_SMOKE {\"ok\":true,\"reason\":\"settled\",\"completions\":0,\"failures\":1,\"event\":\"done\"}\n"
+    }
+  ],
+  "sourceChangedDuringRun": false,
+  "passed": true
+}
