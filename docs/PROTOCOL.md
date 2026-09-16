@@ -8,7 +8,8 @@ Hyphae provisions a dedicated Unix socket and OS-random 256-bit credential.
 The token uses the `hypm1_` domain and is separate from native/operator keys.
 The connection file schema is `hyphae-memory-panel-connection-v1` and contains
 only `schema`, `endpoint` and `token`. The client rejects generic credentials,
-symlinks, non-socket endpoints and files or directories accessible by other users.
+symbolic path components, non-socket endpoints and unsafe ownership or modes as
+specified below.
 
 One UTF-8 JSON request is sent per connection, followed by write EOF. The
 service sends one JSON response and closes the connection. Requests identify
@@ -39,6 +40,38 @@ The interface bounds input to 64 KiB, responses to 1 MiB and concurrent service
 requests to four. Input, operation and output deadlines are 5, 120 and 5 seconds.
 The native complete-proof limit remains 16 MiB. Oversized, malformed, unauthorized
 and unsupported requests return bounded errors.
+
+## Credential and socket path binding in 0.2.2
+
+The client walks the absolute credential and endpoint paths from the filesystem
+root. It opens each directory relative to the descriptor for the preceding
+component with `O_PATH | O_DIRECTORY | O_NOFOLLOW`; it never validates an
+ancestor and then re-resolves that ancestor by pathname. Every component must
+be a real directory owned by the invoking user or root. Group- or
+other-writable components are rejected unless the sticky bit protects their
+entries. The immediate parent has the stricter existing rule: it must be owned
+by the invoking user and have no group or other permission bits.
+
+The connection file is opened with `O_RDONLY | O_NOFOLLOW` relative to the held
+parent descriptor. Its descriptor must identify a regular file owned by the
+invoking user, inaccessible to group/other, and no larger than 4 KiB. This
+binds the file read to the directory identity that was checked.
+
+Linux provides no `connectat(2)`, so the socket is inspected relative to its
+held parent and connected through `/proc/self/fd/<parent-fd>/<name>`. The bound
+address is limited to the 107-byte pathname capacity of `sockaddr_un`. The
+parent descriptor remains open until `connect()` succeeds or fails and is
+closed on every return path. Replacement of an ancestor after validation
+therefore cannot redirect the connection.
+
+The socket entry must be owned by the invoking user, have no group or other
+permission bits, and identify a Unix socket. After connecting, the client
+requires Linux `SO_PEERCRED` support and verifies the listener UID before
+transmitting the token. A process with the same UID could replace the final
+socket name between its descriptor-relative `lstat()` and `connect()`; that
+process already has the credential's filesystem authority. A different local
+account cannot modify the private immediate parent, and the peer-UID check
+fails closed before any credential byte is sent.
 
 ## Client process boundary in 0.2.1
 

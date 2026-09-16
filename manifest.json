@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "org.hyphaeresearch.memory",
   "name": "Hyphae Memory",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Hyphae Research Foundation",
   "license": "Apache-2.0",
   "description": "A local memory panel using a dedicated, restricted Hyphae service connection.",

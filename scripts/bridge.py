@@ -20,6 +20,13 @@ MAX_REQUEST = 64 * 1024
 MAX_RESPONSE = 1024 * 1024
 MAX_STDOUT = 2 * 1024 * 1024
 SOCKET_DEADLINE = 135
+SOCKET_PATH_BYTES = 107
+# Flags for every directory component of a validated path. O_PATH rather than O_RDONLY because a
+# search-only directory such as 0311 is traversable today and must stay traversable, while
+# O_RDONLY | O_DIRECTORY fails on it with EACCES. An O_PATH descriptor still supports os.fstat,
+# serves as dir_fd for os.open and os.lstat, and resolves through /proc/self/fd, which is
+# everything the walk and the binding need. The fallback keeps import working without O_PATH.
+COMPONENT_FLAGS = getattr(os, 'O_PATH', os.O_RDONLY) | os.O_DIRECTORY | os.O_NOFOLLOW
 OPERATIONS = frozenset(('status', 'projects', 'recall', 'list', 'store', 'forget', 'backups', 'backup'))
 MUTATIONS = frozenset(('store', 'forget', 'backup'))
 UNCERTAIN_ERRORS = frozenset(('timeout', 'unavailable', 'protocol_error', 'limit_exceeded'))
@@ -84,19 +91,69 @@ def connection_path() -> Path:
     return root / 'hyphae-panel/client.json'
 
 
-def private_parent(path: Path) -> None:
-    parent = path.parent
-    metadata = parent.lstat()
-    if (not path.is_absolute() or not stat.S_ISDIR(metadata.st_mode)
-            or metadata.st_uid != os.getuid() or metadata.st_mode & 0o077
-            or parent.resolve(strict=True) != parent):
-        raise ValueError('A private owner-controlled directory is required')
+def component_metadata(descriptor: int) -> os.stat_result:
+    """Read one opened component's metadata. A seam a test substitutes to vary st_uid."""
+    return os.fstat(descriptor)
+
+
+def private_component(descriptor: int) -> None:
+    """Require an opened component to be a directory owned by this user or root, not writable
+    by group or other unless the sticky bit is set."""
+    metadata = component_metadata(descriptor)
+    if (not stat.S_ISDIR(metadata.st_mode) or stat.S_ISLNK(metadata.st_mode)
+            or metadata.st_uid not in (os.getuid(), 0)
+            or (metadata.st_mode & 0o022 and not metadata.st_mode & stat.S_ISVTX)):
+        raise ValueError('Every path component must be an owner-controlled directory')
+
+
+def open_parent(path: Path) -> tuple[int, str]:
+    """Walk an absolute path component by component and return (parent descriptor, final name).
+
+    Each directory component is opened relative to the descriptor of the one before it, so the
+    returned descriptor is the only route to the final component and no pathname is re-walked
+    between check and use. The final component is never opened here: it is the credential file or
+    the socket, reached through the returned pair. At most two descriptors are held at once and
+    every one of them is closed before this raises.
+    """
+    parts = path.parts
+    if not path.is_absolute() or len(parts) < 2 or '..' in parts:
+        raise ValueError('An absolute path without parent references is required')
+    # parts[0] is the POSIX root, '/' or '//', which name the same inode. pathlib has already
+    # dropped empty and '.' components, so the walk never sees them.
+    descriptor = os.open(parts[0], COMPONENT_FLAGS)
+    try:
+        private_component(descriptor)
+        for name in parts[1:-1]:
+            successor = os.open(name, COMPONENT_FLAGS, dir_fd=descriptor)
+            os.close(descriptor)
+            descriptor = successor
+            private_component(descriptor)
+        metadata = component_metadata(descriptor)
+        if metadata.st_uid != os.getuid() or metadata.st_mode & 0o077:
+            raise ValueError('A private owner-controlled directory is required')
+    except BaseException:
+        os.close(descriptor)
+        raise
+    return descriptor, parts[-1]
+
+
+def release_binding(binding: dict) -> None:
+    """Close and forget a held endpoint-parent descriptor, once."""
+    descriptor = binding.pop('parent', None)
+    if descriptor is not None:
+        os.close(descriptor)
 
 
 def load_connection() -> dict:
-    path = connection_path()
-    private_parent(path)
-    descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    # The walk validates every component and the returned descriptor is the only route to the
+    # credential, so no pathname is re-walked between the check and the open. The parent descriptor
+    # is released as soon as the open has used it; the fstat below then describes exactly the
+    # object opened through it.
+    parent, name = open_parent(connection_path())
+    try:
+        descriptor = os.open(name, os.O_RDONLY | os.O_NOFOLLOW, dir_fd=parent)
+    finally:
+        os.close(parent)
     with os.fdopen(descriptor, 'rb') as stream:
         metadata = os.fstat(stream.fileno())
         if (not stat.S_ISREG(metadata.st_mode) or metadata.st_uid != os.getuid()
@@ -110,13 +167,32 @@ def load_connection() -> dict:
     return value
 
 
-def validate_endpoint(connection: dict) -> None:
+def validate_endpoint(connection: dict, *, binding: dict | None = None) -> dict:
+    """Validate the endpoint relative to a held parent and replace its path with that binding.
+
+    Linux has no connectat(2). /proc/self/fd resolves the final socket name through the held
+    O_PATH directory descriptor, so replacing any component of the original pathname after this
+    check cannot redirect connect(). The caller keeps the returned binding alive through connect.
+    """
+    binding = {} if binding is None else binding
+    if binding:
+        raise ValueError('An empty endpoint binding is required')
     endpoint = Path(connection['endpoint'])
-    private_parent(endpoint)
-    metadata = endpoint.lstat()
-    if (not stat.S_ISSOCK(metadata.st_mode) or metadata.st_uid != os.getuid()
-            or metadata.st_mode & 0o077):
-        raise ValueError('Invalid memory socket')
+    parent, name = open_parent(endpoint)
+    try:
+        metadata = os.lstat(name, dir_fd=parent)
+        if (not stat.S_ISSOCK(metadata.st_mode) or metadata.st_uid != os.getuid()
+                or metadata.st_mode & 0o077):
+            raise ValueError('Invalid memory socket')
+        address = f'/proc/self/fd/{parent}/{name}'
+        if len(os.fsencode(address)) > SOCKET_PATH_BYTES:
+            raise ValueError('The bound memory socket path is too long')
+        connection['endpoint'] = address
+        binding['parent'] = parent
+    except BaseException:
+        os.close(parent)
+        raise
+    return binding
 
 
 def execute(request: dict, *, submission: dict | None = None) -> dict:
@@ -139,65 +215,79 @@ def execute(request: dict, *, submission: dict | None = None) -> dict:
         return fail('connection_required', request_id)
     except (OSError, ValueError, TypeError):
         return fail('unauthorized', request_id)
+    binding = {}
     try:
-        validate_endpoint(connection)
-    except FileNotFoundError:
-        return fail('unavailable', request_id)
-    except (OSError, ValueError):
-        return fail('unauthorized', request_id)
-    try:
-        payload = json.dumps({**request, 'token': connection['token']}, ensure_ascii=False,
-                             separators=(',', ':'), allow_nan=False).encode('utf-8')
-    except (ValueError, TypeError, OverflowError, RecursionError):
-        return fail('invalid_request', request_id)
-    if len(payload) > MAX_REQUEST:
-        return fail('limit_exceeded', request_id)
-    deadline = time.monotonic() + SOCKET_DEADLINE
-    try:
-        with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as stream:
-            stream.settimeout(5)
-            stream.connect(connection['endpoint'])
-            if hasattr(socket, 'SO_PEERCRED'):
-                _, uid, _ = struct.unpack('3i', stream.getsockopt(socket.SOL_SOCKET, socket.SO_PEERCRED, 12))
+        try:
+            validate_endpoint(connection, binding=binding)
+        except FileNotFoundError:
+            return fail('unavailable', request_id)
+        except (OSError, ValueError):
+            return fail('unauthorized', request_id)
+        try:
+            payload = json.dumps({**request, 'token': connection['token']}, ensure_ascii=False,
+                                 separators=(',', ':'), allow_nan=False).encode('utf-8')
+        except (ValueError, TypeError, OverflowError, RecursionError):
+            return fail('invalid_request', request_id)
+        if len(payload) > MAX_REQUEST:
+            return fail('limit_exceeded', request_id)
+        deadline = time.monotonic() + SOCKET_DEADLINE
+        try:
+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as stream:
+                stream.settimeout(5)
+                stream.connect(connection['endpoint'])
+                release_binding(binding)
+                peer_option = getattr(socket, 'SO_PEERCRED', None)
+                if peer_option is None:
+                    return fail('unauthorized', request_id)
+                try:
+                    _, uid, _ = struct.unpack(
+                        '3i', stream.getsockopt(socket.SOL_SOCKET, peer_option, 12))
+                except (OSError, struct.error, TypeError, ValueError):
+                    return fail('unauthorized', request_id)
                 if uid != os.getuid():
                     return fail('unauthorized', request_id)
-            # sendall may raise after transmitting some or all of a request.
-            # A missing acknowledgement never authorizes a mutation retry.
-            submission['possibly_sent'] = True
-            stream.sendall(payload)
-            stream.shutdown(socket.SHUT_WR)
-            reply = bytearray()
-            while True:
-                remaining = deadline - time.monotonic()
-                if remaining <= 0:
-                    return reject('timeout')
-                stream.settimeout(remaining)
-                chunk = stream.recv(min(65536, MAX_RESPONSE + 1 - len(reply)))
-                if not chunk:
-                    break
-                if len(chunk) > MAX_RESPONSE - len(reply):
-                    return reject('limit_exceeded')
-                reply.extend(chunk)
-        value = json.loads(reply)
-        if (not isinstance(value, dict) or value.get('schema') != SCHEMA or type(value.get('ok')) is not bool
-                or set(value) - {'schema', 'id', 'ok', 'result', 'error'}):
-            return reject('protocol_error')
-        if not value['ok']:
-            code = value.get('error', {}).get('code', 'protocol_error')
-            response_id = value.get('id')
-            if ((response_id is not None and (type(response_id) is not int or response_id != request_id))
-                    or not isinstance(code, str) or code not in MESSAGES):
+                # sendall may raise after transmitting some or all of a request.
+                # A missing acknowledgement never authorizes a mutation retry.
+                submission['possibly_sent'] = True
+                stream.sendall(payload)
+                stream.shutdown(socket.SHUT_WR)
+                reply = bytearray()
+                while True:
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0:
+                        return reject('timeout')
+                    stream.settimeout(remaining)
+                    chunk = stream.recv(min(65536, MAX_RESPONSE + 1 - len(reply)))
+                    if not chunk:
+                        break
+                    if len(chunk) > MAX_RESPONSE - len(reply):
+                        return reject('limit_exceeded')
+                    reply.extend(chunk)
+            value = json.loads(reply)
+            if (not isinstance(value, dict) or value.get('schema') != SCHEMA
+                    or type(value.get('ok')) is not bool
+                    or set(value) - {'schema', 'id', 'ok', 'result', 'error'}):
                 return reject('protocol_error')
-            return reject(code)
-        if type(value.get('id')) is not int or value['id'] != request_id or not isinstance(value.get('result'), dict) or 'error' in value:
+            if not value['ok']:
+                code = value.get('error', {}).get('code', 'protocol_error')
+                response_id = value.get('id')
+                if ((response_id is not None
+                     and (type(response_id) is not int or response_id != request_id))
+                        or not isinstance(code, str) or code not in MESSAGES):
+                    return reject('protocol_error')
+                return reject(code)
+            if (type(value.get('id')) is not int or value['id'] != request_id
+                    or not isinstance(value.get('result'), dict) or 'error' in value):
+                return reject('protocol_error')
+            return value
+        except TimeoutError:
+            return reject('timeout')
+        except (OSError, ConnectionError):
+            return reject('unavailable')
+        except (ValueError, TypeError, AttributeError, OverflowError, RecursionError):
             return reject('protocol_error')
-        return value
-    except TimeoutError:
-        return reject('timeout')
-    except (OSError, ConnectionError):
-        return reject('unavailable')
-    except (ValueError, TypeError, AttributeError, OverflowError, RecursionError):
-        return reject('protocol_error')
+    finally:
+        release_binding(binding)
 
 
 def main() -> None:

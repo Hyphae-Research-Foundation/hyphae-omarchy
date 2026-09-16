@@ -3,6 +3,7 @@
 /dist/
 /.runtime/
 /.upstream/
+/.kiro/
 __pycache__/
 *.pyc
 *.key

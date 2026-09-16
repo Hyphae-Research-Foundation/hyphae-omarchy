@@ -5,10 +5,11 @@ Search and save memories, verify queries at their recorded snapshot, and create
 verified backups. Project scopes and explicitly shared global memories stay
 visible in the panel.
 
-Version 0.2.1 is a desktop client for the dedicated `hyphae-memory-panel-v1`
+Version 0.2.2 is a desktop client for the dedicated `hyphae-memory-panel-v1`
 interface. The service enforces its memory-only authority through a separate
-Unix socket and credential. This patch hardens helper startup, retained output
-and process cleanup. See the native tests and their scope in the
+Unix socket and credential. This release binds credential reads and socket
+connections to validated directory identities, building on the bounded helper
+startup, output and cleanup in 0.2.1. See the tests and their scope in the
 [validation record](docs/VALIDATION.md).
 
 ![Hyphae Memory on Omarchy](preview.png)
@@ -49,9 +50,10 @@ this desktop client alone does not replace the agents' executable.
 The client reads `~/.config/hyphae-panel/client.json` (respecting
 `XDG_CONFIG_HOME`). `HYPHAE_MEMORY_PANEL_CONFIG` can select another connection
 file. Hyphae creates the file with its dedicated endpoint and credential; keep
-it private. The file, socket and their parent directories must belong to the
-current user and exclude access by other users. Refresh the panel after the
-service becomes available.
+it private. The file, socket and each immediate parent must belong to the
+current user and exclude group/other access. Higher path components must belong
+to the user or root and must not be writable by others unless protected by the
+sticky bit. Refresh the panel after the service becomes available.
 
 The helper runs through the absolute system interpreter with `-I -S -B` and a
 cleared environment. It receives only `LC_ALL=C.UTF-8` and any configured,

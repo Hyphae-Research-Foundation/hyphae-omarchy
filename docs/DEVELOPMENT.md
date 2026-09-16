@@ -19,7 +19,14 @@ The tests use actual temporary Unix sockets and private credential files.
 They exercise request/response framing, missing/incorrect/insecure credentials,
 symlink and non-socket preservation, wrong response identities, bounded output,
 credential redaction, request limits, and rejection of operator requests.
-The 0.2.1 coverage also starts the real bridge with
+The 0.2.2 coverage walks multi-component credential and endpoint paths, rejects
+writable or foreign-owned ancestors, substitutes path components between check
+and use, verifies descriptor-relative socket binding, checks peer-credential
+fail-closed behavior, and confirms descriptor cleanup. Preservation cases cover
+root-owned sticky `/tmp`, an owner-owned `0755` configuration ancestor and
+search-only directory components.
+
+The process coverage added in 0.2.1 also starts the real bridge with
 `/usr/bin/python3 -I -S -B`, a minimal explicit environment and a normal temporary
 socket fixture. It checks Unicode round-tripping through ASCII JSON, final
 encoded stdout bounds, sanitized overflow, the 135-second socket deadline and
@@ -44,7 +51,7 @@ an independently provisioned service. Run the official manifest validator and
 `qmllint` against the installed Omarchy imports. Inspect all three tabs; exercise
 manual capture, Enter search, verified recall, Escape cancellation/close, global
 sharing, backup creation, and offline/reconnected states. Compare the installed
-production files and package inventory with the release source. For 0.2.1,
+production files and package inventory with the release source. For 0.2.2,
 validate normal isolated-helper startup and completion, controlled process
 failure, channel cleanup, the 140-second lifetime followed by the two-second
 TERM and two-second reap grace periods, and the no-overlap behavior when a child

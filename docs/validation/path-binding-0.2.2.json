@@ -1,0 +1,90 @@
+{
+  "schema": "hyphae-memory-path-validation-v1",
+  "version": "0.2.2",
+  "date": "2026-09-16",
+  "finding": {
+    "url": "https://github.com/omacom/omarchy-plugin-marketplace/issues/6541#issuecomment-5692927161",
+    "baselineCommit": "ae68f2466425c89a4654c539aa8b78f43f404b82",
+    "baselineVersion": "0.2.1"
+  },
+  "environment": {
+    "omarchy": "4.0.3",
+    "quickshell": "0.3.1",
+    "qt": "6.11.2",
+    "pythonVm": "3.14.7",
+    "pythonAdditional": "3.12.14",
+    "nodeVm": "26.8.1",
+    "platform": "Linux x86_64 QA VM and Linux x86_64 host"
+  },
+  "officialManifestValidation": {
+    "command": "omarchy plugin validate <staged-plugin>",
+    "exitCode": 0
+  },
+  "qmlLint": {
+    "command": "/usr/lib/qt6/bin/qmllint -I /usr/lib/qt6/qml BoundedMemoryProcess.qml MemoryController.qml",
+    "exitCode": 0,
+    "diagnostics": [
+      "QProcess::ExitStatus parameter metadata missing in Quickshell type information (signal-handler-parameters). Native tests verified delivery of the normal-exit signal."
+    ]
+  },
+  "pythonClientTests": {
+    "command": "/usr/bin/python3 -I -S -B -m unittest discover -s tests -p test_bridge.py -v",
+    "passed": 44,
+    "originalTestsUnmodified": 29,
+    "pathBindingTests": 10,
+    "preservationTests": 5,
+    "interpretersPassed": [
+      "3.12.14",
+      "3.14.7"
+    ],
+    "baselineCounterexamples": {
+      "testedCommit": "ae68f2466425c89a4654c539aa8b78f43f404b82",
+      "expectedFailuresObserved": 6
+    }
+  },
+  "javascriptLimitsTests": {
+    "command": "node tests/test_process_limits.cjs",
+    "passed": 8
+  },
+  "nativeSmoke": {
+    "command": "/usr/bin/python3 -I -S -B tests/native_process_smoke.py --report <report>",
+    "passed": 5,
+    "report": "process-native-0.2.2.json",
+    "reportSha256": "ec71cddd6f946d4cc18592e5595f32ea4ea69c2db2023465e1704484c1df3fe8",
+    "sourceChangedDuringRun": false,
+    "remainingChildren": 0,
+    "overlappingChildConnections": 0,
+    "testOnlyOverrides": [
+      "200 ms lifetime for the deadline scenario",
+      "absolute nonexistent interpreter in a separate missing-dependency copy"
+    ]
+  },
+  "verifiedProperties": [
+    "Every credential and endpoint ancestor is opened descriptor-relatively with O_DIRECTORY and O_NOFOLLOW.",
+    "Foreign-owned and non-sticky group- or other-writable ancestors are rejected before transmission.",
+    "The credential file is opened relative to its validated parent descriptor.",
+    "The endpoint is inspected relative to its validated parent and connected through that held directory identity.",
+    "SO_PEERCRED support and a matching listener UID are required before token transmission.",
+    "Held path descriptors are released after connect and on pre-connect returns.",
+    "Root-owned sticky and owner-controlled non-writable ancestors preserve successful behavior.",
+    "Existing errors, mutation submission state, data preservation, limits and no-retry behavior are unchanged."
+  ],
+  "productionFiles": {
+    "BoundedMemoryProcess.qml": "d0d179af8facc0a153d216b29ea99bd3ea29cee594d1f437f04a1130efcbe647",
+    "ProcessLimits.js": "966101eb414d5b0f748866b32841dc2bdeeaec140dea700024877e057e0cd591",
+    "MemoryController.qml": "b5fcc0d31d722b4f236370b3a601daef69938c657ea546d7d5212483f4334555",
+    "scripts/bridge.py": "e83563f42f08304f340ef522241dc441c8a993e820f8e8df86c8eb2a1fbe1a48",
+    "tests/test_bridge.py": "3262344699e8c8368abe849764667784e7ac1a81351ef0c9a967c56fe881e719",
+    "manifest.json": "0e10a0be1a5513349d0a4fcc8ba774722bd7d0c0e47907ce9c8751e7d1bcc100",
+    "BarWidget.qml": "7140d00a6ded3b34ccc8a55d5d23af69ff6b36ad4943d614b9153df27b787f79",
+    "Panel.qml": "944ea8e45b99719eb2db7b440109676a25683aefd2a500261711b723a81284bc",
+    "contracts/memory-panel-v1.json": "101daa62272ebccb28958049f42b88131a1a3aa3df0d49a371c6591ff80169f9"
+  },
+  "limits": [
+    "The endpoint directory identity is pinned; a same-UID process can still replace the final socket entry before connect and already has the credential's filesystem authority.",
+    "The endpoint binding requires Linux procfs and a bound AF_UNIX pathname no longer than 107 encoded bytes.",
+    "The native deadline fixture exercises TERM cleanup with a shortened lifetime; it does not simulate a kernel-unreapable process or independently exercise SIGKILL escalation.",
+    "QML admission and retention bounds exclude transient Qt read/decode allocations and total process memory.",
+    "No live Hyphae service, configuration or persistent memory was used."
+  ]
+}

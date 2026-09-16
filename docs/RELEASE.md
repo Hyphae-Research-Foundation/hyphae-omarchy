@@ -1,11 +1,20 @@
-# Hyphae Memory 0.2.1
+# Hyphae Memory 0.2.2
 
-This maintainer-review patch hardens the local helper process used by the
-Omarchy memory client. It keeps the `hyphae-memory-panel-v1` interface and the
-same memory-data authority. Runtime/service administration and external
-integrations remain independently managed through Hyphae.
+This maintainer-review patch closes the credential/socket pathname boundary
+reported for 0.2.1. It keeps the `hyphae-memory-panel-v1` interface and the same
+memory-data authority. Runtime/service administration and external integrations
+remain independently managed through Hyphae.
 
-The helper now launches directly through `/usr/bin/python3 -I -S -B` with a
+Every credential and endpoint directory component is opened from the filesystem
+root with descriptor-relative `O_DIRECTORY | O_NOFOLLOW` traversal and checked
+for safe ownership and write modes. The credential is opened relative to the
+validated parent. The socket is inspected there and connected through the held
+parent's `/proc/self/fd` identity. `SO_PEERCRED` is mandatory and checked before
+the token is transmitted. Descriptors are released after connect and on every
+failure path.
+
+The bounded process behavior introduced in 0.2.1 remains unchanged. The helper
+launches directly through `/usr/bin/python3 -I -S -B` with a
 cleared environment: `LC_ALL=C.UTF-8` plus optional absolute `HOME`,
 `XDG_CONFIG_HOME` and `HYPHAE_MEMORY_PANEL_CONFIG` paths. It does not select an
 interpreter through `PATH` or load Python site initialization.
@@ -25,16 +34,18 @@ whose result cannot be confirmed return `outcome_unknown`; the client never
 automatically retries `store`, `forget` or `backup`. Check current records or
 backups before resubmitting an uncertain change.
 
-Validation passes 29 Python client tests, eight JavaScript limits tests, five
+Validation passes 44 Python client tests, eight JavaScript limits tests, five
 native Quickshell fixture scenarios and official Omarchy manifest validation.
-The native cases cover Unicode, queue ordering, uncertain outcomes, deadline
-cleanup and failed startup. The [validation record](VALIDATION.md) includes
-source hashes, test-only overrides and the single QML lint type-metadata warning;
-the native normal-exit tests pass. The unchanged 0.2.0 desktop receipts are
-labeled as historical evidence. Marketplace listing still requires review of
-the final default-branch commit.
+The Python cases include all 29 original tests plus path substitution, unsafe
+ancestor, peer identity, descriptor lifecycle and preservation checks. The
+native cases cover Unicode, queue ordering, uncertain outcomes, deadline cleanup
+and failed startup. The [validation record](VALIDATION.md) includes source
+hashes, test-only overrides and the single QML lint type-metadata warning; the
+native normal-exit tests pass. The unchanged 0.2.0 desktop receipts and 0.2.1
+process receipt remain labeled with their original source hashes. Marketplace
+listing still requires review of the final default-branch commit.
 
-The versioned client archive is named `hyphae-memory-0.2.1.tar.gz`; a published
+The versioned client archive is named `hyphae-memory-0.2.2.tar.gz`; a published
 release pairs it with `package.json` and `SHA256SUMS`. The package receipt
 inventories every source member. Omarchy, system Python and the separately
 provisioned Hyphae service supply runtime dependencies. Node.js is needed only

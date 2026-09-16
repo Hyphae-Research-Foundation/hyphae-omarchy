@@ -1,56 +1,90 @@
-# Validation of Hyphae Memory 0.2.1
+# Validation of Hyphae Memory 0.2.2
 
-## 0.2.1 process-hardening checks
+## 0.2.2 path-identity and regression checks
 
-The maintainer-review patch passed client, JavaScript and native Quickshell
-checks on 15 September 2026. The [0.2.1 receipt](validation/process-boundary-0.2.1.json)
-records the tested production hashes. The older screenshots and full-engine
-receipts below remain the 0.2.0 baseline.
+The credential/socket boundary patch passed client, JavaScript, native
+Quickshell, QML lint and official manifest checks on 16 September 2026. The
+[path-binding receipt](validation/path-binding-0.2.2.json) records the commands,
+environment and production hashes. The generated
+[native report](validation/process-native-0.2.2.json) binds its five scenarios
+to the current QML and bridge sources.
 
 | Surface | Current result | Reproduce |
 | --- | --- | --- |
-| Python bridge | 29 tests passed, including an isolated subprocess and temporary Unix socket | `/usr/bin/python3 -I -S -B -m unittest discover -s tests -p test_bridge.py -v` |
+| Python bridge | 44 tests passed on Python 3.12.14 and 3.14.7 | `/usr/bin/python3 -I -S -B -m unittest discover -s tests -p test_bridge.py -v` |
 | Pure JavaScript process limits | 8 tests passed | `node tests/test_process_limits.cjs` |
-| Official Omarchy manifest validation | Passed | `omarchy plugin validate <staged-plugin>` |
-| QML lint, Qt 6.11.2 / Quickshell 0.3.1 | Exit 0; one type-metadata warning described below | `qmllint -I /usr/lib/qt6/qml BoundedMemoryProcess.qml MemoryController.qml` |
-| Native process lifecycle | 5 scenarios passed; no overlapping connections or remaining fixture children | [Native report](validation/process-native-0.2.1.json), `python3 tests/native_process_smoke.py` |
+| Official Omarchy manifest validation | Passed on staged 0.2.2 source | `omarchy plugin validate <staged-plugin>` |
+| QML lint, Qt 6.11.2 / Quickshell 0.3.1 | Exit 0; one unchanged type-metadata warning described below | `/usr/lib/qt6/bin/qmllint -I /usr/lib/qt6/qml BoundedMemoryProcess.qml MemoryController.qml` |
+| Native process lifecycle | 5 scenarios passed; no overlapping connections or remaining fixture children | [Native report](validation/process-native-0.2.2.json), `python3 tests/native_process_smoke.py` |
 
-The Python checks cover normal minimal-environment startup, ASCII JSON Unicode
-round-tripping, final output-size checks before writing, bounded fallback errors,
-the 135-second socket deadline, known native rejections and uncertain mutation
-results without retries. Fault handling uses small fixtures or unit mocks; no
-live memory service is involved.
+The 44 Python checks contain the 29 unmodified 0.2.1 tests, ten focused
+path-binding tests and five preservation tests. The six original
+counterexamples fail against exact release commit `ae68f24`: writable
+credential/endpoint ancestors are accepted, a substituted credential is read,
+a substituted socket receives the token, and an absent peer-credential check
+fails open. All six pass against 0.2.2.
+
+The added checks also cover a foreign-owned or pre-existing symbolic ancestor,
+descriptor identity and idempotent release, and cleanup after successful and
+pre-connect returns. Preservation fixtures confirm unchanged behavior under
+root-owned sticky `/tmp`, an owner-owned `0755` configuration ancestor and
+search-only components. Existing error codes, file contents, mutation
+submission state, bounds and no-retry behavior remain unchanged.
+
+The implementation opens each directory component relative to the preceding
+held descriptor and opens the credential relative to the validated parent. It
+inspects the socket there and connects through
+`/proc/self/fd/<parent-fd>/<name>`, keeping that parent descriptor alive through
+`connect()`. Linux `SO_PEERCRED` is mandatory before transmission. Tests verify
+that ancestor replacement cannot redirect either use and that no held
+descriptor survives the request.
 
 The JavaScript checks cover UTF-8 request sizing, the 4-MiB stdout admission
 budget before retention, its three-byte per-chunk BOM reserve, the separate
 2-MiB-plus-newline retained ASCII bound, launch paths and mutation messages.
-They exercise the pure policy functions. The native tests run the current QML
-components and bridge on Omarchy 4.0.3, Quickshell 0.3.1, Qt 6.11.2 and Python
-3.14.7. They check Unicode through ASCII JSON, startup plus two queued reads,
-an uncertain dummy write that discards the queue, deadline-triggered TERM cleanup,
-and deferred failed-start cleanup. Fixture child metadata confirms the absolute
-isolated interpreter and allowlisted environment names. Completion/failure
-observations find the prior children reaped; every private process group is
-empty after exit. No live Hyphae service, configuration or memory is used.
+They exercise the pure policy functions.
+
+The native tests run the current QML components and bridge on Omarchy 4.0.3,
+Quickshell 0.3.1, Qt 6.11.2 and Python 3.14.7. They check Unicode through ASCII
+JSON, startup plus two queued reads, an uncertain dummy write that discards the
+queue, deadline-triggered TERM cleanup, and deferred failed-start cleanup.
+Fixture child metadata confirms the absolute isolated interpreter and
+allowlisted environment names. Completion/failure observations find the prior
+children reaped; every private process group is empty after exit. No live
+Hyphae service, configuration or memory is used.
 
 Normal, queue and uncertainty scenarios use unchanged production copies. A
 separate deadline copy shortens `LIFETIME_MS` from 140,000 to 200 ms against a
-one-second fixture response; another copy uses an absolute nonexistent interpreter
-to test FailedToStart. The report identifies both overrides. These tests do not
-independently exercise SIGKILL escalation, simulate a kernel-unreapable child or
-establish a total-process-memory bound. The two-second TERM/reap timers and
-fail-closed slot handling also received source review against Quickshell/Qt.
+one-second fixture response; another copy uses an absolute nonexistent
+interpreter to test FailedToStart. The report identifies both overrides.
 
-`qmllint` reports missing `QProcess::ExitStatus` parameter metadata for `onExited`
-in the Quickshell type information. The warning is retained, not suppressed;
-native normal-exit and deadline-cleanup scenarios verify the signal at runtime.
+`qmllint` reports missing `QProcess::ExitStatus` parameter metadata for
+`onExited` in the Quickshell type information. The warning is retained, not
+suppressed; native normal-exit and deadline-cleanup scenarios verify the signal
+at runtime.
 
-Stdout admission/retention limits do not bound Qt's transient pipe-read or UTF-8
-decode allocations or overall process memory. Stderr has zero client retention;
-its read event causes termination. See [the exact protocol and process
-limits](PROTOCOL.md). The configured CI matrix runs the Python checks on
-3.11.15 and 3.13.9 and the JavaScript checks with pinned Node 24.16.0; hosted
-results for this revision are a separate release check.
+The descriptor binding pins the endpoint directory, not the final socket entry:
+a same-UID process can replace that name between `lstat()` and `connect()`.
+The immediate parent excludes every other UID, and the mandatory peer-UID check
+occurs before token transmission. The same UID already has permission to read
+the credential. The bound address also depends on Linux procfs and is rejected
+if its encoded pathname exceeds 107 bytes.
+
+The native checks do not independently exercise SIGKILL escalation, simulate a
+kernel-unreapable child or establish a total-process-memory bound. Stdout
+admission/retention limits do not bound Qt's transient pipe-read or UTF-8 decode
+allocations or overall process memory. Stderr has zero client retention; its
+read event causes termination. See [the exact protocol and process
+limits](PROTOCOL.md). The configured CI matrix will separately run the Python
+checks on 3.11.15 and 3.13.9 and JavaScript on pinned Node 24.16.0.
+
+## 0.2.1 process-hardening evidence
+
+The immutable [0.2.1 receipt](validation/process-boundary-0.2.1.json) and
+[native report](validation/process-native-0.2.1.json) record the process
+hardening tested at release commit `ae68f24` on 15 September 2026. Their bridge
+hash intentionally identifies that release, not 0.2.2. The 0.2.2 native report
+above reruns the same scenarios against the corrected bridge.
 
 ## 0.2.0 native baseline
 
